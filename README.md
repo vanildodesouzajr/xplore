@@ -1,36 +1,120 @@
-This is a [Next.js](https://nextjs.org) project bootstrapped with [`create-next-app`](https://nextjs.org/docs/app/api-reference/cli/create-next-app).
+# Xplore
 
-## Getting Started
+A bilingual game‑completion **checklist** tracker. Browse a shared catalog of games,
+add them to your library, and tick off everything worth doing — grouped into
+chapters/phases with optional per‑item tips (e.g. boss strategies, item locations).
 
-First, run the development server:
+Live: **https://xplore-delta.vercel.app**
+
+## Tech stack
+
+- **Next.js 16** (App Router, Turbopack) + **React 19** + **TypeScript**
+- **Tailwind CSS v4** + **shadcn** (Base UI variant), **lucide-react** icons, **Geist** font
+- **Supabase** — Postgres + Auth, SSR cookie sessions via `@supabase/ssr`
+- **PWA** — web app manifest + service worker
+- Hosted on **Vercel** (auto‑deploy on push to `main`)
+
+> ⚠️ This repo pins a modified Next.js 16 where "middleware" is renamed **`proxy.ts`** and
+> other conventions differ from older Next.js. See `AGENTS.md` — read the guides in
+> `node_modules/next/dist/docs/` before changing framework‑level code.
+
+## Features
+
+- **Auth**: email/password sign‑up (email confirmation), login/logout, password
+  recovery, and self‑service account deletion.
+- **Profiles**: auto‑created on sign‑up; editable display name + avatar on `/account`.
+- **Catalog & library**: all authenticated users see the shared catalog; each user adds
+  games to their own library and tracks their own progress.
+- **Checklists**: game → categories (chapters) → items (title + optional description).
+  A **tabbed navigator** shows one chapter at a time — a lateral index on desktop,
+  horizontal tabs on mobile — with the active section persisted in the URL (`?c=<id>`)
+  so a refresh returns to the same place.
+- **Ownership**: only a game's creator can edit its checklist (enforced by RLS + UI).
+- **Bilingual (EN default / PT)**: the whole UI and all game content are localizable.
+- **Theming**: dark by default, with a light‑mode toggle (no flash on load).
+- **Covers**: game cover art rendered on cards and the detail page.
+- **Keepalive cron**: a daily Vercel Cron pings the DB so the Supabase free tier
+  doesn't auto‑pause.
+
+## Getting started
 
 ```bash
-npm run dev
-# or
-yarn dev
-# or
-pnpm dev
-# or
-bun dev
+npm install
+npm run dev        # http://localhost:3000
 ```
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+Scripts: `dev`, `build`, `start`, `lint`.
 
-You can start editing the page by modifying `app/page.tsx`. The page auto-updates as you edit the file.
+### Environment variables (`.env.local`)
 
-This project uses [`next/font`](https://nextjs.org/docs/app/building-your-application/optimizing/fonts) to automatically optimize and load [Geist](https://vercel.com/font), a new font family for Vercel.
+| Variable | Scope | Purpose |
+| --- | --- | --- |
+| `NEXT_PUBLIC_SUPABASE_URL` | public | Supabase project URL |
+| `NEXT_PUBLIC_SUPABASE_PUBLISHABLE_KEY` | public | Supabase anon/publishable key |
+| `SUPABASE_SECRET_KEY` | **server only** | Service‑role key (admin client) |
+| `SUPABASE_DB_PASSWORD` | server only | DB password for CLI migrations |
+| `SUPABASE_PROJECT_REF` | server only | Supabase project ref |
+| `CRON_SECRET` | **server only** | Bearer token that guards `/api/cron/keepalive` |
 
-## Learn More
+The same variables are configured in Vercel (Production + Development). Never expose
+`SUPABASE_SECRET_KEY` or `CRON_SECRET` to the client.
 
-To learn more about Next.js, take a look at the following resources:
+## Routes
 
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
+| Path | Notes |
+| --- | --- |
+| `/login`, `/signup`, `/forgot-password`, `/reset-password` | Auth (public) |
+| `/auth/confirm`, `/auth/callback` | Email‑link handlers (set session cookies) |
+| `/dashboard` | The signed‑in user's library |
+| `/games`, `/games/new` | Catalog + create a game |
+| `/games/[slug]`, `/games/[slug]/edit` | Game detail (checklist) + owner‑only editor |
+| `/account` | Profile + danger zone (delete account) |
+| `/api/cron/keepalive` | `GET`, Bearer‑authed; runs daily via `vercel.json` cron |
+| `proxy.ts` (root) | Auth gating (Next 16's renamed middleware) |
 
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js) - your feedback and contributions are welcome!
+## Data model
 
-## Deploy on Vercel
+Migrations live in `supabase/migrations/` (applied with the Supabase CLI:
+`supabase db push --linked`).
 
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
+- `games` — `id, slug, title, title_i18n, platform, cover_url, created_by`
+- `checklist_categories` — `id, game_id, title, title_i18n, order_index`
+- `checklist_items` — `id, category_id, title, title_i18n, description, description_i18n, order_index`
+- `user_game_progress` — `(user_id, game_id)` = a game in a user's library
+- `user_item_progress` — `(user_id, item_id, completed, completed_at)`
+- `profiles` — `id, display_name, avatar_url` (auto‑created by an `auth.users` insert trigger)
 
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/app/building-your-application/deploying) for more details.
+**RLS**: the catalog (`games`, `checklist_categories`, `checklist_items`) is readable by any
+authenticated user but writable only by a game's `created_by`; `user_*_progress` and
+`profiles` rows are scoped to their owner.
+
+The `*_i18n` columns are JSONB locale maps like `{ "en": "…", "pt": "…" }`. The plain
+`title`/`description` columns hold the fallback value (see i18n below).
+
+## Internationalization (`src/i18n/`)
+
+- **Default locale** is English; a `locale` cookie switches to Portuguese. It's a cookie
+  (not `localStorage`) so Server Components can read it and render the right language.
+- `config.ts` — `locales`, `defaultLocale`, cookie name. `get-locale.ts` reads/validates it.
+- `dictionaries/en.ts` is the **source of truth** for the `Dictionary` type; `pt.ts` must
+  match its shape. `get-dictionary.ts` maps locale → dictionary and exposes `t()` for
+  `{placeholder}` interpolation.
+- **UI strings** come from the dictionary. Server pages call `getLocale()` + `getDictionary()`
+  and pass strings to client components as props (clients can't call the server helpers).
+- **Content** (game/category/item text) is stored bilingually and resolved with
+  `pick(row.title_i18n, locale, row.title)`. Official content is fully bilingual;
+  user‑created content is single‑language with fallback to whatever exists.
+- `LocaleToggle` (header) sets the cookie and calls `router.refresh()`.
+
+## Adding official game content
+
+Curated games (e.g. Metal Gear Solid) are inserted by a one‑off service‑role script that
+sets `title_i18n`/`description_i18n` for both locales and assigns `created_by` to the team
+account. Covers go in `public/covers/<slug>.png` and are referenced via `cover_url`.
+(These seed scripts are run locally and not committed.)
+
+## Deployment
+
+Pushing to `main` triggers a Vercel production deploy. The `dev` branch is kept in sync
+and produces preview deploys. Database migrations are applied separately via the Supabase
+CLI against the linked project.
