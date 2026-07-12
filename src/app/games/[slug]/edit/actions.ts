@@ -2,6 +2,8 @@
 
 import { revalidatePath } from "next/cache";
 import { createClient } from "@/lib/supabase/server";
+import { getLocale } from "@/i18n/get-locale";
+import { getDictionary } from "@/i18n/get-dictionary";
 
 export type EditFormState = { error: string | null };
 
@@ -11,7 +13,9 @@ export async function addCategoryAction(
   formData: FormData
 ): Promise<EditFormState> {
   const title = ((formData.get("title") as string) ?? "").trim();
-  if (!title) return { error: "Category title is required." };
+  const locale = await getLocale();
+  const dict = getDictionary(locale);
+  if (!title) return { error: dict.editChecklist.categoryTitleRequired };
 
   const supabase = await createClient();
 
@@ -23,6 +27,7 @@ export async function addCategoryAction(
   const { error } = await supabase.from("checklist_categories").insert({
     game_id: gameId,
     title,
+    title_i18n: { [locale]: title },
     order_index: count ?? 0,
   });
 
@@ -40,7 +45,9 @@ export async function addItemAction(
 ): Promise<EditFormState> {
   const title = ((formData.get("title") as string) ?? "").trim();
   const description = ((formData.get("description") as string) ?? "").trim();
-  if (!title) return { error: "Item title is required." };
+  const locale = await getLocale();
+  const dict = getDictionary(locale);
+  if (!title) return { error: dict.editChecklist.itemTitleRequired };
 
   const supabase = await createClient();
 
@@ -52,7 +59,9 @@ export async function addItemAction(
   const { error } = await supabase.from("checklist_items").insert({
     category_id: categoryId,
     title,
+    title_i18n: { [locale]: title },
     description: description || null,
+    description_i18n: description ? { [locale]: description } : {},
     order_index: count ?? 0,
   });
 

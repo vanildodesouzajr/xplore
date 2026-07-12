@@ -1,28 +1,47 @@
 import Link from "next/link";
 import { AuthForm } from "@/components/auth-form";
+import { AuthShell } from "@/components/auth-shell";
+import { getLocale } from "@/i18n/get-locale";
+import { getDictionary } from "@/i18n/get-dictionary";
 import { signInAction } from "./actions";
 
-export default function LoginPage() {
+export default async function LoginPage() {
+  const dict = getDictionary(await getLocale());
+  const d = dict.auth.login;
+
   return (
-    <div className="flex flex-1 items-center justify-center p-6">
-      <div className="flex w-full max-w-sm flex-col gap-6">
-        <div className="text-center">
-          <h1 className="text-2xl font-semibold">Log in</h1>
-          <p className="text-sm text-muted-foreground">
-            Track your game completion checklists.
-          </p>
-        </div>
-        <AuthForm action={signInAction} submitLabel="Log in" />
-        <p className="text-center text-sm text-muted-foreground">
-          Don&apos;t have an account?{" "}
+    <AuthShell
+      title={d.title}
+      subtitle={d.subtitle}
+      footer={
+        <>
+          {d.noAccount}{" "}
           <Link
             href="/signup"
-            className="text-primary underline-offset-4 hover:underline"
+            className="font-medium text-primary underline-offset-4 hover:underline"
           >
-            Sign up
+            {d.signUp}
           </Link>
-        </p>
-      </div>
-    </div>
+        </>
+      }
+    >
+      <AuthForm
+        action={signInAction}
+        submitLabel={d.submit}
+        labels={{
+          email: dict.auth.fields.email,
+          password: dict.auth.fields.password,
+          loading: dict.common.loading,
+        }}
+      />
+      <p className="mt-4 text-center text-sm">
+        <Link
+          href="/forgot-password"
+          className="text-muted-foreground underline-offset-4 hover:text-foreground hover:underline"
+        >
+          {d.forgot}
+        </Link>
+      </p>
+    </AuthShell>
   );
 }

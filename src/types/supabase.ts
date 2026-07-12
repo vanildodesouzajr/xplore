@@ -14,6 +14,7 @@ export interface Database {
           id: string
           slug: string
           title: string
+          title_i18n: Json
           platform: string
           cover_url: string | null
           created_by: string | null
@@ -23,6 +24,7 @@ export interface Database {
           id?: string
           slug: string
           title: string
+          title_i18n?: Json
           platform: string
           cover_url?: string | null
           created_by?: string | null
@@ -32,10 +34,35 @@ export interface Database {
           id?: string
           slug?: string
           title?: string
+          title_i18n?: Json
           platform?: string
           cover_url?: string | null
           created_by?: string | null
           created_at?: string
+        }
+        Relationships: []
+      }
+      profiles: {
+        Row: {
+          id: string
+          display_name: string | null
+          avatar_url: string | null
+          created_at: string
+          updated_at: string
+        }
+        Insert: {
+          id: string
+          display_name?: string | null
+          avatar_url?: string | null
+          created_at?: string
+          updated_at?: string
+        }
+        Update: {
+          id?: string
+          display_name?: string | null
+          avatar_url?: string | null
+          created_at?: string
+          updated_at?: string
         }
         Relationships: []
       }
@@ -44,6 +71,7 @@ export interface Database {
           id: string
           game_id: string
           title: string
+          title_i18n: Json
           order_index: number
           created_at: string
         }
@@ -51,6 +79,7 @@ export interface Database {
           id?: string
           game_id: string
           title: string
+          title_i18n?: Json
           order_index?: number
           created_at?: string
         }
@@ -58,6 +87,7 @@ export interface Database {
           id?: string
           game_id?: string
           title?: string
+          title_i18n?: Json
           order_index?: number
           created_at?: string
         }
@@ -75,7 +105,9 @@ export interface Database {
           id: string
           category_id: string
           title: string
+          title_i18n: Json
           description: string | null
+          description_i18n: Json
           order_index: number
           created_at: string
         }
@@ -83,7 +115,9 @@ export interface Database {
           id?: string
           category_id: string
           title: string
+          title_i18n?: Json
           description?: string | null
+          description_i18n?: Json
           order_index?: number
           created_at?: string
         }
@@ -91,7 +125,9 @@ export interface Database {
           id?: string
           category_id?: string
           title?: string
+          title_i18n?: Json
           description?: string | null
+          description_i18n?: Json
           order_index?: number
           created_at?: string
         }

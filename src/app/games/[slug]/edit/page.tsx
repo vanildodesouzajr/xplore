@@ -1,7 +1,12 @@
-import { notFound } from "next/navigation";
+import Link from "next/link";
+import { notFound, redirect } from "next/navigation";
+import { ChevronLeft } from "lucide-react";
 import { createClient } from "@/lib/supabase/server";
 import { AddCategoryForm } from "@/components/add-category-form";
 import { AddItemForm } from "@/components/add-item-form";
+import { getLocale } from "@/i18n/get-locale";
+import { getDictionary, t } from "@/i18n/get-dictionary";
+import { pick } from "@/i18n/pick";
 import { addCategoryAction, addItemAction } from "./actions";
 
 export default async function EditGamePage({
@@ -11,18 +16,27 @@ export default async function EditGamePage({
 }) {
   const { slug } = await params;
   const supabase = await createClient();
+  const locale = await getLocale();
+  const dict = getDictionary(locale);
+  const d = dict.editChecklist;
 
   const { data: game } = await supabase
     .from("games")
-    .select("id, title")
+    .select("id, title, title_i18n, created_by")
     .eq("slug", slug)
     .maybeSingle();
 
   if (!game) notFound();
 
+  const { data: claimsData } = await supabase.auth.getClaims();
+  const userId = claimsData?.claims?.sub;
+  if (game.created_by !== userId) redirect(`/games/${slug}`);
+
+  const gameTitle = pick(game.title_i18n, locale, game.title);
+
   const { data: categories } = await supabase
     .from("checklist_categories")
-    .select("id, title, order_index")
+    .select("id, title, title_i18n, order_index")
     .eq("game_id", game.id)
     .order("order_index");
 
@@ -31,45 +45,95 @@ export default async function EditGamePage({
   const { data: items } = categoryIds.length
     ? await supabase
         .from("checklist_items")
-        .select("id, category_id, title, description, order_index")
+        .select(
+          "id, category_id, title, title_i18n, description, description_i18n, order_index"
+        )
         .in("category_id", categoryIds)
         .order("order_index")
     : { data: [] };
 
+  const itemLabels = {
+    titlePlaceholder: d.itemTitlePlaceholder,
+    descPlaceholder: d.itemDescPlaceholder,
+    add: d.addItem,
+    adding: d.adding,
+  };
+
   return (
     <div className="mx-auto flex w-full max-w-2xl flex-col gap-6 p-6">
-      <div>
-        <h1 className="text-2xl font-semibold">Edit checklist</h1>
-        <p className="text-sm text-muted-foreground">{game.title}</p>
+      <div className="flex flex-col gap-1">
+        <Link
+          href={`/games/${slug}`}
+          className="flex w-fit items-center gap-1 text-sm text-muted-foreground transition-colors hover:text-foreground"
+        >
+          <ChevronLeft className="size-4" />
+          {t(d.backTo, { title: gameTitle })}
+        </Link>
+        <h1 className="font-heading text-2xl font-semibold tracking-tight">
+          {d.title}
+        </h1>
       </div>
 
-      <div className="flex flex-col gap-6">
-        {(categories ?? []).map((category) => (
-          <div
-            key={category.id}
-            className="flex flex-col gap-3 rounded-lg border p-4"
-          >
-            <h2 className="text-base font-semibold">{category.title}</h2>
-            <ul className="flex flex-col gap-1 text-sm">
-              {(items ?? [])
-                .filter((item) => item.category_id === category.id)
-                .map((item) => (
-                  <li key={item.id} className="text-muted-foreground">
-                    {item.title}
-                    {item.description ? ` — ${item.description}` : ""}
-                  </li>
-                ))}
-            </ul>
-            <AddItemForm categoryId={category.id} action={addItemAction} />
-          </div>
-        ))}
+      <div className="flex flex-col gap-4">
+        {(categories ?? []).map((category) => {
+          const categoryItems = (items ?? []).filter(
+            (item) => item.category_id === category.id
+          );
+          return (
+            <div
+              key={category.id}
+              className="flex flex-col gap-3 rounded-xl border bg-card p-4"
+            >
+              <h2 className="font-heading text-base font-semibold">
+                {pick(category.title_i18n, locale, category.title)}
+              </h2>
+              {categoryItems.length > 0 ? (
+                <ul className="flex flex-col gap-1 text-sm">
+                  {categoryItems.map((item) => {
+                    const title = pick(item.title_i18n, locale, item.title);
+                    const description = item.description
+                      ? pick(item.description_i18n, locale, item.description)
+                      : null;
+                    return (
+                      <li
+                        key={item.id}
+                        className="flex items-start gap-2 text-muted-foreground"
+                      >
+                        <span className="mt-1.5 size-1 shrink-0 rounded-full bg-muted-foreground/50" />
+                        <span>
+                          <span className="text-foreground">{title}</span>
+                          {description ? ` — ${description}` : ""}
+                        </span>
+                      </li>
+                    );
+                  })}
+                </ul>
+              ) : (
+                <p className="text-sm text-muted-foreground">{d.noItems}</p>
+              )}
+              <AddItemForm
+                categoryId={category.id}
+                action={addItemAction}
+                labels={itemLabels}
+              />
+            </div>
+          );
+        })}
       </div>
 
-      <div className="rounded-lg border border-dashed p-4">
+      <div className="rounded-xl border border-dashed p-4">
         <h2 className="mb-3 text-sm font-medium text-muted-foreground">
-          Add category
+          {d.addCategory}
         </h2>
-        <AddCategoryForm gameId={game.id} action={addCategoryAction} />
+        <AddCategoryForm
+          gameId={game.id}
+          action={addCategoryAction}
+          labels={{
+            placeholder: d.categoryPlaceholder,
+            add: d.addCategory,
+            adding: d.adding,
+          }}
+        />
       </div>
     </div>
   );

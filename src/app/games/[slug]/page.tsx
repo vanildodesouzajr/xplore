@@ -5,6 +5,9 @@ import { ChecklistCategorySection } from "@/components/checklist-category-sectio
 import { ProgressBar } from "@/components/progress-bar";
 import { Button } from "@/components/ui/button";
 import { computeCompletionPercent } from "@/lib/progress";
+import { getLocale } from "@/i18n/get-locale";
+import { getDictionary, t } from "@/i18n/get-dictionary";
+import { pick } from "@/i18n/pick";
 import { toggleItemCompletionAction } from "./actions";
 
 export default async function GameDetailPage({
@@ -14,10 +17,13 @@ export default async function GameDetailPage({
 }) {
   const { slug } = await params;
   const supabase = await createClient();
+  const locale = await getLocale();
+  const dict = getDictionary(locale);
+  const d = dict.gameDetail;
 
   const { data: game } = await supabase
     .from("games")
-    .select("id, slug, title, platform")
+    .select("id, slug, title, title_i18n, platform, created_by")
     .eq("slug", slug)
     .maybeSingle();
 
@@ -25,7 +31,7 @@ export default async function GameDetailPage({
 
   const { data: categories } = await supabase
     .from("checklist_categories")
-    .select("id, title, order_index")
+    .select("id, title, title_i18n, order_index")
     .eq("game_id", game.id)
     .order("order_index");
 
@@ -34,7 +40,9 @@ export default async function GameDetailPage({
   const { data: items } = categoryIds.length
     ? await supabase
         .from("checklist_items")
-        .select("id, category_id, title, description, order_index")
+        .select(
+          "id, category_id, title, title_i18n, description, description_i18n, order_index"
+        )
         .in("category_id", categoryIds)
         .order("order_index")
     : { data: [] };
@@ -57,13 +65,15 @@ export default async function GameDetailPage({
 
   const categoriesWithItems = (categories ?? []).map((category) => ({
     id: category.id,
-    title: category.title,
+    title: pick(category.title_i18n, locale, category.title),
     items: (items ?? [])
       .filter((item) => item.category_id === category.id)
       .map((item) => ({
         id: item.id,
-        title: item.title,
-        description: item.description,
+        title: pick(item.title_i18n, locale, item.title),
+        description: item.description
+          ? pick(item.description_i18n, locale, item.description)
+          : null,
         completed: completedIds.has(item.id),
       })),
   }));
@@ -73,31 +83,68 @@ export default async function GameDetailPage({
     completedIds.size
   );
 
+  const isOwner = game.created_by === userId;
+
   return (
     <div className="mx-auto flex w-full max-w-2xl flex-col gap-6 p-6">
       <div className="flex items-start justify-between gap-4">
-        <div>
-          <h1 className="text-2xl font-semibold">{game.title}</h1>
-          <p className="text-sm text-muted-foreground">{game.platform}</p>
+        <div className="flex flex-col gap-1">
+          <span className="inline-flex w-fit items-center rounded-md bg-muted px-1.5 py-0.5 text-xs font-medium text-muted-foreground">
+            {game.platform}
+          </span>
+          <h1 className="font-heading text-2xl font-semibold tracking-tight">
+            {pick(game.title_i18n, locale, game.title)}
+          </h1>
         </div>
-        <Button
-          render={<Link href={`/games/${slug}/edit`} />}
-          variant="outline"
-          size="sm"
-        >
-          Edit checklist
-        </Button>
+        {isOwner && (
+          <Button
+            render={<Link href={`/games/${slug}/edit`} />}
+            nativeButton={false}
+            variant="outline"
+            size="sm"
+          >
+            {d.editChecklist}
+          </Button>
+        )}
       </div>
 
-      <ProgressBar percent={overallPercent} />
+      <div className="rounded-xl border bg-card p-4">
+        <div className="mb-2 flex items-baseline justify-between">
+          <span className="text-sm font-medium text-muted-foreground">
+            {d.overallProgress}
+          </span>
+          <span className="font-heading text-2xl font-semibold tabular-nums">
+            {overallPercent}
+            <span className="text-base text-muted-foreground">%</span>
+          </span>
+        </div>
+        <ProgressBar percent={overallPercent} />
+        {itemIds.length > 0 && (
+          <p className="mt-2 text-xs text-muted-foreground">
+            {t(d.itemsComplete, {
+              done: completedIds.size,
+              total: itemIds.length,
+            })}
+          </p>
+        )}
+      </div>
 
       {categoriesWithItems.length === 0 ? (
         <p className="text-sm text-muted-foreground">
-          No checklist yet.{" "}
-          <Link href={`/games/${slug}/edit`} className="underline underline-offset-4">
-            Add categories and items
-          </Link>{" "}
-          to get started.
+          {d.noChecklistOwner}{" "}
+          {isOwner ? (
+            <>
+              <Link
+                href={`/games/${slug}/edit`}
+                className="underline underline-offset-4"
+              >
+                {d.addCategoriesItems}
+              </Link>{" "}
+              {d.toGetStarted}
+            </>
+          ) : (
+            d.noChecklistOther
+          )}
         </p>
       ) : (
         <div className="flex flex-col gap-6">

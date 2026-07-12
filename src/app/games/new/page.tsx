@@ -1,42 +1,38 @@
-"use client";
+import Link from "next/link";
+import { ChevronLeft } from "lucide-react";
+import { NewGameForm } from "@/components/new-game-form";
+import { getLocale } from "@/i18n/get-locale";
+import { getDictionary } from "@/i18n/get-dictionary";
 
-import { useActionState } from "react";
-import { Button } from "@/components/ui/button";
-import { Input } from "@/components/ui/input";
-import { Label } from "@/components/ui/label";
-import { createGameAction, type CreateGameState } from "../actions";
-
-const initialState: CreateGameState = { error: null };
-
-export default function NewGamePage() {
-  const [state, formAction, pending] = useActionState(
-    createGameAction,
-    initialState
-  );
+export default async function NewGamePage() {
+  const dict = getDictionary(await getLocale());
+  const d = dict.newGame;
 
   return (
-    <div className="mx-auto flex w-full max-w-sm flex-col gap-6 p-6">
-      <h1 className="text-2xl font-semibold">New game</h1>
-      <form action={formAction} className="flex flex-col gap-4">
-        <div className="flex flex-col gap-1.5">
-          <Label htmlFor="title">Title</Label>
-          <Input id="title" name="title" required />
-        </div>
-        <div className="flex flex-col gap-1.5">
-          <Label htmlFor="platform">Platform</Label>
-          <Input id="platform" name="platform" required placeholder="PS5, Switch, PC..." />
-        </div>
-        <div className="flex flex-col gap-1.5">
-          <Label htmlFor="cover_url">Cover image URL (optional)</Label>
-          <Input id="cover_url" name="cover_url" type="url" />
-        </div>
-        {state.error && (
-          <p className="text-sm text-destructive">{state.error}</p>
-        )}
-        <Button type="submit" disabled={pending}>
-          {pending ? "Creating…" : "Create game"}
-        </Button>
-      </form>
+    <div className="mx-auto flex w-full max-w-md flex-col gap-4 p-6">
+      <Link
+        href="/games"
+        className="flex w-fit items-center gap-1 text-sm text-muted-foreground transition-colors hover:text-foreground"
+      >
+        <ChevronLeft className="size-4" />
+        {d.backToCatalog}
+      </Link>
+      <div>
+        <h1 className="font-heading text-2xl font-semibold tracking-tight">
+          {d.title}
+        </h1>
+        <p className="text-sm text-muted-foreground">{d.subtitle}</p>
+      </div>
+      <NewGameForm
+        labels={{
+          title: d.fields.title,
+          platform: d.fields.platform,
+          platformPlaceholder: d.fields.platformPlaceholder,
+          coverUrl: d.fields.coverUrl,
+          submit: d.submit,
+          submitting: d.submitting,
+        }}
+      />
     </div>
   );
 }

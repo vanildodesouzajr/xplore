@@ -1,12 +1,20 @@
 import Link from "next/link";
+import { Library } from "lucide-react";
 import { createClient } from "@/lib/supabase/server";
 import { GameCard } from "@/components/game-card";
+import { Button } from "@/components/ui/button";
 import { computeCompletionPercent } from "@/lib/progress";
+import { getLocale } from "@/i18n/get-locale";
+import { getDictionary, t } from "@/i18n/get-dictionary";
+import { pick } from "@/i18n/pick";
 
 export default async function DashboardPage() {
   const supabase = await createClient();
   const { data: claimsData } = await supabase.auth.getClaims();
   const userId = claimsData?.claims?.sub ?? "";
+  const locale = await getLocale();
+  const dict = getDictionary(locale);
+  const d = dict.dashboard;
 
   const { data: tracked } = await supabase
     .from("user_game_progress")
@@ -17,24 +25,24 @@ export default async function DashboardPage() {
 
   if (gameIds.length === 0) {
     return (
-      <div className="mx-auto flex w-full max-w-3xl flex-col items-center gap-4 p-6 text-center">
-        <h1 className="text-2xl font-semibold">Your games</h1>
-        <p className="text-sm text-muted-foreground">
-          You&apos;re not tracking any games yet.
-        </p>
-        <Link
-          href="/games"
-          className="text-primary underline-offset-4 hover:underline"
-        >
-          Browse the catalog
-        </Link>
+      <div className="mx-auto flex w-full max-w-md flex-1 flex-col items-center justify-center gap-4 p-6 text-center">
+        <div className="flex size-14 items-center justify-center rounded-2xl bg-primary/10 text-primary ring-1 ring-primary/20">
+          <Library className="size-7" />
+        </div>
+        <div className="flex flex-col gap-1">
+          <h1 className="text-xl font-semibold">{d.emptyTitle}</h1>
+          <p className="text-sm text-muted-foreground">{d.emptyBody}</p>
+        </div>
+        <Button render={<Link href="/games" />} nativeButton={false}>
+          {d.browseCatalog}
+        </Button>
       </div>
     );
   }
 
   const { data: games } = await supabase
     .from("games")
-    .select("id, slug, title, platform")
+    .select("id, slug, title, title_i18n, platform")
     .in("id", gameIds);
 
   const { data: categories } = await supabase
@@ -84,14 +92,28 @@ export default async function DashboardPage() {
 
   return (
     <div className="mx-auto flex w-full max-w-3xl flex-col gap-6 p-6">
-      <div className="flex items-center justify-between">
-        <h1 className="text-2xl font-semibold">Your games</h1>
-        <Link
-          href="/games"
-          className="text-sm text-primary underline-offset-4 hover:underline"
+      <div className="flex items-end justify-between gap-4">
+        <div>
+          <h1 className="font-heading text-2xl font-semibold tracking-tight">
+            {d.yourGames}
+          </h1>
+          <p className="text-sm text-muted-foreground">
+            {t(
+              (games?.length ?? 0) === 1
+                ? d.gamesInLibrary_one
+                : d.gamesInLibrary_other,
+              { count: games?.length ?? 0 }
+            )}
+          </p>
+        </div>
+        <Button
+          render={<Link href="/games" />}
+          nativeButton={false}
+          variant="outline"
+          size="sm"
         >
-          Browse catalog
-        </Link>
+          {d.browse}
+        </Button>
       </div>
       <div className="grid grid-cols-1 gap-4 sm:grid-cols-2">
         {(games ?? []).map((game) => {
@@ -100,10 +122,11 @@ export default async function DashboardPage() {
           return (
             <GameCard
               key={game.id}
-              title={game.title}
+              title={pick(game.title_i18n, locale, game.title)}
               platform={game.platform}
               href={`/games/${game.slug}`}
               percent={computeCompletionPercent(total, completed)}
+              completeLabel={dict.games.complete}
             />
           );
         })}

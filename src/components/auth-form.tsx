@@ -13,9 +13,11 @@ export type AuthFormState = {
 export function AuthForm({
   action,
   submitLabel,
+  labels,
 }: {
   action: (state: AuthFormState, formData: FormData) => Promise<AuthFormState>;
   submitLabel: string;
+  labels: { email: string; password: string; loading: string };
 }) {
   const [state, formAction, pending] = useActionState(action, {
     error: null,
@@ -25,7 +27,7 @@ export function AuthForm({
   return (
     <form action={formAction} className="flex flex-col gap-4">
       <div className="flex flex-col gap-1.5">
-        <Label htmlFor="email">Email</Label>
+        <Label htmlFor="email">{labels.email}</Label>
         <Input
           id="email"
           name="email"
@@ -35,7 +37,7 @@ export function AuthForm({
         />
       </div>
       <div className="flex flex-col gap-1.5">
-        <Label htmlFor="password">Password</Label>
+        <Label htmlFor="password">{labels.password}</Label>
         <Input
           id="password"
           name="password"
@@ -50,7 +52,7 @@ export function AuthForm({
         <p className="text-sm text-muted-foreground">{state.message}</p>
       )}
       <Button type="submit" disabled={pending} className="w-full">
-        {pending ? "Please wait…" : submitLabel}
+        {pending ? labels.loading : submitLabel}
       </Button>
     </form>
   );

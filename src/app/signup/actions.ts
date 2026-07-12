@@ -3,6 +3,8 @@
 import { redirect } from "next/navigation";
 import { createClient } from "@/lib/supabase/server";
 import type { AuthFormState } from "@/components/auth-form";
+import { getLocale } from "@/i18n/get-locale";
+import { getDictionary } from "@/i18n/get-dictionary";
 
 export async function signUpAction(
   _prevState: AuthFormState,
@@ -10,6 +12,12 @@ export async function signUpAction(
 ): Promise<AuthFormState> {
   const email = (formData.get("email") as string) ?? "";
   const password = (formData.get("password") as string) ?? "";
+
+  const dict = getDictionary(await getLocale());
+
+  if (password.length < 6) {
+    return { error: dict.auth.errors.passwordMin };
+  }
 
   const supabase = await createClient();
   const { data, error } = await supabase.auth.signUp({ email, password });
@@ -24,6 +32,6 @@ export async function signUpAction(
 
   return {
     error: null,
-    message: "Check your email to confirm your account, then log in.",
+    message: dict.auth.signupConfirm,
   };
 }

@@ -4,6 +4,8 @@ import { revalidatePath } from "next/cache";
 import { redirect } from "next/navigation";
 import { createClient } from "@/lib/supabase/server";
 import { slugify } from "@/lib/slug";
+import { getLocale } from "@/i18n/get-locale";
+import { getDictionary } from "@/i18n/get-dictionary";
 
 export async function addGameToLibraryAction(gameId: string) {
   const supabase = await createClient();
@@ -11,9 +13,13 @@ export async function addGameToLibraryAction(gameId: string) {
   const userId = data?.claims?.sub;
   if (!userId) redirect("/login");
 
+  // Idempotent: adding a game already in the library is a no-op, not an error.
   await supabase
     .from("user_game_progress")
-    .insert({ user_id: userId, game_id: gameId });
+    .upsert(
+      { user_id: userId, game_id: gameId },
+      { onConflict: "user_id,game_id", ignoreDuplicates: true }
+    );
 
   revalidatePath("/games");
   revalidatePath("/dashboard");
@@ -29,8 +35,11 @@ export async function createGameAction(
   const platform = ((formData.get("platform") as string) ?? "").trim();
   const coverUrl = ((formData.get("cover_url") as string) ?? "").trim();
 
+  const locale = await getLocale();
+  const dict = getDictionary(locale);
+
   if (!title || !platform) {
-    return { error: "Title and platform are required." };
+    return { error: dict.newGame.errors.required };
   }
 
   const supabase = await createClient();
@@ -42,6 +51,7 @@ export async function createGameAction(
 
   const { error } = await supabase.from("games").insert({
     title,
+    title_i18n: { [locale]: title },
     platform,
     slug,
     cover_url: coverUrl || null,
@@ -49,6 +59,9 @@ export async function createGameAction(
   });
 
   if (error) {
+    if (error.code === "23505") {
+      return { error: dict.newGame.errors.duplicate };
+    }
     return { error: error.message };
   }
 
