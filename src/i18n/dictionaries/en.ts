@@ -75,6 +75,7 @@ export const en = {
   gameDetail: {
     editChecklist: "Edit checklist",
     overallProgress: "Overall progress",
+    chapters: "Chapters",
     itemsComplete: "{done} of {total} items complete",
     noChecklistOwner: "No checklist yet.",
     addCategoriesItems: "Add categories and items",

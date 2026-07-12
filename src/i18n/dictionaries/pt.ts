@@ -79,6 +79,7 @@ export const pt: Dictionary = {
   gameDetail: {
     editChecklist: "Editar checklist",
     overallProgress: "Progresso geral",
+    chapters: "Capítulos",
     itemsComplete: "{done} de {total} itens concluídos",
     noChecklistOwner: "Nenhum checklist ainda.",
     addCategoriesItems: "Adicione categorias e itens",

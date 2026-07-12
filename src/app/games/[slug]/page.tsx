@@ -1,7 +1,7 @@
 import Link from "next/link";
 import { notFound } from "next/navigation";
 import { createClient } from "@/lib/supabase/server";
-import { ChecklistCategorySection } from "@/components/checklist-category-section";
+import { ChecklistNavigator } from "@/components/checklist-navigator";
 import { ProgressBar } from "@/components/progress-bar";
 import { Button } from "@/components/ui/button";
 import { computeCompletionPercent } from "@/lib/progress";
@@ -12,10 +12,13 @@ import { toggleItemCompletionAction } from "./actions";
 
 export default async function GameDetailPage({
   params,
+  searchParams,
 }: {
   params: Promise<{ slug: string }>;
+  searchParams: Promise<{ c?: string }>;
 }) {
   const { slug } = await params;
+  const { c } = await searchParams;
   const supabase = await createClient();
   const locale = await getLocale();
   const dict = getDictionary(locale);
@@ -85,8 +88,14 @@ export default async function GameDetailPage({
 
   const isOwner = game.created_by === userId;
 
+  // Restore the section from the URL (?c=id) on refresh; default to the first.
+  const initialSectionId =
+    categoriesWithItems.find((section) => section.id === c)?.id ??
+    categoriesWithItems[0]?.id ??
+    "";
+
   return (
-    <div className="mx-auto flex w-full max-w-2xl flex-col gap-6 p-6">
+    <div className="mx-auto flex w-full max-w-4xl flex-col gap-6 p-6">
       <div className="flex items-start justify-between gap-4">
         <div className="flex flex-col gap-1">
           <span className="inline-flex w-fit items-center rounded-md bg-muted px-1.5 py-0.5 text-xs font-medium text-muted-foreground">
@@ -147,16 +156,12 @@ export default async function GameDetailPage({
           )}
         </p>
       ) : (
-        <div className="flex flex-col gap-6">
-          {categoriesWithItems.map((category) => (
-            <ChecklistCategorySection
-              key={category.id}
-              title={category.title}
-              items={category.items}
-              toggleAction={toggleItemCompletionAction}
-            />
-          ))}
-        </div>
+        <ChecklistNavigator
+          sections={categoriesWithItems}
+          initialSectionId={initialSectionId}
+          chaptersLabel={d.chapters}
+          toggleAction={toggleItemCompletionAction}
+        />
       )}
     </div>
   );
