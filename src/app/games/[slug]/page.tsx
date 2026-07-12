@@ -1,3 +1,4 @@
+import Image from "next/image";
 import Link from "next/link";
 import { notFound } from "next/navigation";
 import { createClient } from "@/lib/supabase/server";
@@ -26,7 +27,7 @@ export default async function GameDetailPage({
 
   const { data: game } = await supabase
     .from("games")
-    .select("id, slug, title, title_i18n, platform, created_by")
+    .select("id, slug, title, title_i18n, platform, cover_url, created_by")
     .eq("slug", slug)
     .maybeSingle();
 
@@ -97,13 +98,24 @@ export default async function GameDetailPage({
   return (
     <div className="mx-auto flex w-full max-w-4xl flex-col gap-6 p-6">
       <div className="flex items-start justify-between gap-4">
-        <div className="flex flex-col gap-1">
-          <span className="inline-flex w-fit items-center rounded-md bg-muted px-1.5 py-0.5 text-xs font-medium text-muted-foreground">
-            {game.platform}
-          </span>
-          <h1 className="font-heading text-2xl font-semibold tracking-tight">
-            {pick(game.title_i18n, locale, game.title)}
-          </h1>
+        <div className="flex items-start gap-4">
+          {game.cover_url && (
+            <Image
+              src={game.cover_url}
+              alt={pick(game.title_i18n, locale, game.title)}
+              width={96}
+              height={96}
+              className="size-20 shrink-0 rounded-lg object-cover shadow-md ring-1 ring-border sm:size-24"
+            />
+          )}
+          <div className="flex flex-col gap-1">
+            <span className="inline-flex w-fit items-center rounded-md bg-muted px-1.5 py-0.5 text-xs font-medium text-muted-foreground">
+              {game.platform}
+            </span>
+            <h1 className="font-heading text-2xl font-semibold tracking-tight">
+              {pick(game.title_i18n, locale, game.title)}
+            </h1>
+          </div>
         </div>
         {isOwner && (
           <Button

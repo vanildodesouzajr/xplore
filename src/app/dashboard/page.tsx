@@ -42,7 +42,7 @@ export default async function DashboardPage() {
 
   const { data: games } = await supabase
     .from("games")
-    .select("id, slug, title, title_i18n, platform")
+    .select("id, slug, title, title_i18n, platform, cover_url")
     .in("id", gameIds);
 
   const { data: categories } = await supabase
@@ -127,6 +127,7 @@ export default async function DashboardPage() {
               href={`/games/${game.slug}`}
               percent={computeCompletionPercent(total, completed)}
               completeLabel={dict.games.complete}
+              coverUrl={game.cover_url}
             />
           );
         })}

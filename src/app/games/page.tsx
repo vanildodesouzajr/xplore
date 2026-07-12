@@ -19,7 +19,7 @@ export default async function GamesPage() {
   const [{ data: games }, { data: tracked }] = await Promise.all([
     supabase
       .from("games")
-      .select("id, slug, title, title_i18n, platform")
+      .select("id, slug, title, title_i18n, platform, cover_url")
       .order("title"),
     supabase
       .from("user_game_progress")
@@ -68,6 +68,7 @@ export default async function GamesPage() {
                 title={pick(game.title_i18n, locale, game.title)}
                 platform={game.platform}
                 href={`/games/${game.slug}`}
+                coverUrl={game.cover_url}
                 completeLabel={d.complete}
                 footer={
                   isTracked ? (
