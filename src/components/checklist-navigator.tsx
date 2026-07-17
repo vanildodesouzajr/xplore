@@ -12,6 +12,7 @@ type Item = {
   id: string;
   title: string;
   description: string | null;
+  imageUrl: string | null;
   completed: boolean;
 };
 
@@ -144,6 +145,7 @@ export function ChecklistNavigator({
                 itemId={item.id}
                 title={item.title}
                 description={item.description}
+                imageUrl={item.imageUrl}
                 completed={item.completed}
                 toggleAction={toggleAction}
               />

@@ -38,6 +38,24 @@ export async function addCategoryAction(
   return { error: null };
 }
 
+// Persist (or clear) a checklist item's image URL. The file itself is uploaded
+// client-side straight to Storage; this only saves the resulting public URL.
+// RLS (checklist_items_update_own_game) ensures only the game owner can write.
+export async function setItemImageAction(
+  itemId: string,
+  imageUrl: string | null
+): Promise<void> {
+  const supabase = await createClient();
+  const { error } = await supabase
+    .from("checklist_items")
+    .update({ image_url: imageUrl })
+    .eq("id", itemId);
+  if (error) throw new Error(error.message);
+
+  revalidatePath("/games/[slug]/edit", "page");
+  revalidatePath("/games/[slug]", "page");
+}
+
 export async function addItemAction(
   categoryId: string,
   _prevState: EditFormState,

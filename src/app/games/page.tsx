@@ -3,6 +3,7 @@ import { Check, Plus, Gamepad2 } from "lucide-react";
 import { createClient } from "@/lib/supabase/server";
 import { GameCard } from "@/components/game-card";
 import { Button } from "@/components/ui/button";
+import { PageContainer } from "@/components/page-container";
 import { getLocale } from "@/i18n/get-locale";
 import { getDictionary } from "@/i18n/get-dictionary";
 import { pick } from "@/i18n/pick";
@@ -30,7 +31,7 @@ export default async function GamesPage() {
   const trackedIds = new Set((tracked ?? []).map((row) => row.game_id));
 
   return (
-    <div className="mx-auto flex w-full max-w-3xl flex-col gap-6 p-6">
+    <PageContainer>
       <div className="flex items-end justify-between gap-4">
         <div>
           <h1 className="font-heading text-2xl font-semibold tracking-tight">
@@ -90,6 +91,6 @@ export default async function GamesPage() {
           })}
         </div>
       )}
-    </div>
+    </PageContainer>
   );
 }

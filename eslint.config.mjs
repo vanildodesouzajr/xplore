@@ -20,6 +20,8 @@ const eslintConfig = defineConfig([
     "out/**",
     "build/**",
     "next-env.d.ts",
+    // Node-only ops scripts (games content sync, etc.) — not part of the app.
+    "scripts/**",
   ]),
 ]);
 

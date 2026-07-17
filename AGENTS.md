@@ -23,5 +23,19 @@ Xplore is a bilingual game‑completion checklist tracker (Next.js 16 + Supabase
 - **Migrations**: add SQL to `supabase/migrations/` and apply with
   `supabase db push --linked`. Keep `src/types/supabase.ts` in sync by hand.
 - **Verify before shipping**: `npx tsc --noEmit`, `npm run lint`, `npm run build` must pass.
+- **Curated game content lives in `content/games/<slug>.json`** and is synced with
+  `scripts/games/sync.mjs` (npm: `games:export` / `games:import`). This is the official way
+  to add or edit a seeded game — never re‑create one by hand. Each category/item carries a
+  stable `key`; the importer upserts by `(parent, key)`, so ids (and therefore
+  `user_*_progress`) survive re‑imports. `key` is **frozen** once assigned: edit titles
+  freely, never edit keys. Always `games:import -- <slug> --dry-run` first; `--prune` deletes
+  DB rows absent from the file (destructive — removes their user progress).
 - **Editing curated content in place** (don't re‑create a seeded game) preserves users'
   progress — re‑creating changes the row ids and wipes existing `user_*_progress`.
+- **Per‑step images**: `checklist_items.image_url` (nullable) holds an optional image for a
+  step. Files live in the public Storage bucket `checklist-images` under
+  `{uid}/{gameId}/{itemId}/…` (storage RLS restricts writes to the owner's uid folder).
+  Upload is **client‑side** via the browser client (`item-image.tsx`) because Server Actions
+  cap bodies at ~1MB; the resulting public URL is persisted by `setItemImageAction`. The
+  importer only touches `image_url` when a content file explicitly includes the field, so
+  UI‑uploaded images survive `games:import`.

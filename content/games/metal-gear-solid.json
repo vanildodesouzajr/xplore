@@ -1,0 +1,1446 @@
+{
+  "slug": "metal-gear-solid",
+  "title": "Metal Gear Solid",
+  "title_i18n": {
+    "en": "Metal Gear Solid",
+    "pt": "Metal Gear Solid"
+  },
+  "platform": "PlayStation",
+  "cover_url": "/covers/metal-gear-solid.png",
+  "created_by": "dd5c4bf0-85ea-4986-9c04-b37e8c986150",
+  "categories": [
+    {
+      "key": "heliport-infiltration",
+      "title": "Heliport Infiltration",
+      "title_i18n": {
+        "en": "Heliport Infiltration",
+        "pt": "Infiltração no Heliporto"
+      },
+      "items": [
+        {
+          "key": "swim-in-through-the-dock-and-surface-quietly",
+          "title": "Swim in through the dock and surface quietly",
+          "title_i18n": {
+            "en": "Swim in through the dock and surface quietly",
+            "pt": "Nadar pela doca e emergir sem fazer barulho"
+          },
+          "description": "Snake enters underwater; wait for the timing so no guard hears you climb out.",
+          "description_i18n": {
+            "en": "Snake enters underwater; wait for the timing so no guard hears you climb out.",
+            "pt": "Snake entra por baixo d'água; espere o momento certo para sair sem que nenhum guarda ouça."
+          }
+        },
+        {
+          "key": "slip-past-the-surveillance-camera",
+          "title": "Slip past the surveillance camera",
+          "title_i18n": {
+            "en": "Slip past the surveillance camera",
+            "pt": "Passar despercebido pela câmera de vigilância"
+          },
+          "description": "Watch the rotating camera near the cargo door and move only when it faces away.",
+          "description_i18n": {
+            "en": "Watch the rotating camera near the cargo door and move only when it faces away.",
+            "pt": "Observe a câmera giratória perto da porta de carga e ande só quando ela estiver virada para o outro lado."
+          }
+        },
+        {
+          "key": "ride-the-cargo-elevator-up-to-the-heliport",
+          "title": "Ride the cargo elevator up to the heliport",
+          "title_i18n": {
+            "en": "Ride the cargo elevator up to the heliport",
+            "pt": "Subir pelo elevador de carga até o heliporto"
+          },
+          "description": "Reach the cargo door at the top of the dock to trigger the elevator.",
+          "description_i18n": {
+            "en": "Reach the cargo door at the top of the dock to trigger the elevator.",
+            "pt": "Chegue à porta de carga no topo da doca para acionar o elevador."
+          }
+        },
+        {
+          "key": "save-your-game-with-mei-ling",
+          "title": "Save your game with Mei Ling",
+          "title_i18n": {
+            "en": "Save your game with Mei Ling",
+            "pt": "Salvar o jogo com Mei Ling"
+          },
+          "description": "Call codec frequency 140.96 to save whenever you need a checkpoint.",
+          "description_i18n": {
+            "en": "Call codec frequency 140.96 to save whenever you need a checkpoint.",
+            "pt": "Ligue no codec na frequência 140.96 para salvar sempre que precisar de um ponto de retorno."
+          }
+        },
+        {
+          "key": "call-colonel-campbell-for-the-briefing",
+          "title": "Call Colonel Campbell for the briefing",
+          "title_i18n": {
+            "en": "Call Colonel Campbell for the briefing",
+            "pt": "Ligar para o Coronel Campbell para o briefing"
+          },
+          "description": "Campbell answers on 140.85 and outlines the rescue and Metal Gear objectives.",
+          "description_i18n": {
+            "en": "Campbell answers on 140.85 and outlines the rescue and Metal Gear objectives.",
+            "pt": "Campbell atende no 140.85 e explica os objetivos do resgate e do Metal Gear."
+          }
+        },
+        {
+          "key": "sneak-across-the-snowy-heliport",
+          "title": "Sneak across the snowy heliport",
+          "title_i18n": {
+            "en": "Sneak across the snowy heliport",
+            "pt": "Atravessar o heliporto nevado sem ser visto"
+          },
+          "description": "Stay crouched and hug the walls to avoid the patrolling guard's cone of view.",
+          "description_i18n": {
+            "en": "Stay crouched and hug the walls to avoid the patrolling guard's cone of view.",
+            "pt": "Fique agachado e cole nas paredes para escapar do campo de visão do guarda que patrulha."
+          }
+        },
+        {
+          "key": "hide-from-the-searchlight",
+          "title": "Hide from the searchlight",
+          "title_i18n": {
+            "en": "Hide from the searchlight",
+            "pt": "Se esconder do holofote"
+          },
+          "description": "Tuck under the parked cargo truck when the searchlight sweeps past.",
+          "description_i18n": {
+            "en": "Tuck under the parked cargo truck when the searchlight sweeps past.",
+            "pt": "Fique embaixo do caminhão de carga estacionado quando o holofote passar."
+          }
+        },
+        {
+          "key": "enter-the-tank-hangar",
+          "title": "Enter the Tank Hangar",
+          "title_i18n": {
+            "en": "Enter the Tank Hangar",
+            "pt": "Entrar no Hangar dos Tanques"
+          },
+          "description": "Use the door or air duct at the far end of the heliport to move indoors.",
+          "description_i18n": {
+            "en": "Use the door or air duct at the far end of the heliport to move indoors.",
+            "pt": "Use a porta ou o duto de ventilação no fim do heliporto para entrar no prédio."
+          }
+        }
+      ]
+    },
+    {
+      "key": "tank-hangar-the-darpa-chief",
+      "title": "Tank Hangar & the DARPA Chief",
+      "title_i18n": {
+        "en": "Tank Hangar & the DARPA Chief",
+        "pt": "Hangar dos Tanques e o Chefe da DARPA"
+      },
+      "items": [
+        {
+          "key": "crawl-through-the-vents-into-the-hangar",
+          "title": "Crawl through the vents into the hangar",
+          "title_i18n": {
+            "en": "Crawl through the vents into the hangar",
+            "pt": "Rastejar pelos dutos até o hangar"
+          },
+          "description": "The ducts drop you behind the guards, avoiding the ground-floor patrols.",
+          "description_i18n": {
+            "en": "The ducts drop you behind the guards, avoiding the ground-floor patrols.",
+            "pt": "Os dutos te deixam atrás dos guardas, longe das patrulhas do térreo."
+          }
+        },
+        {
+          "key": "spot-meryl-disguised-as-a-guard",
+          "title": "Spot Meryl disguised as a guard",
+          "title_i18n": {
+            "en": "Spot Meryl disguised as a guard",
+            "pt": "Identificar Meryl disfarçada de guarda"
+          },
+          "description": "One 'guard' behaves oddly on the lower floor — remember her, it's Meryl.",
+          "description_i18n": {
+            "en": "One 'guard' behaves oddly on the lower floor — remember her, it's Meryl.",
+            "pt": "Um dos 'guardas' age de forma estranha no piso inferior — grave o rosto, é a Meryl."
+          }
+        },
+        {
+          "key": "avoid-the-ceiling-security-cameras",
+          "title": "Avoid the ceiling security cameras",
+          "title_i18n": {
+            "en": "Avoid the ceiling security cameras",
+            "pt": "Evitar as câmeras de segurança do teto"
+          },
+          "description": "Being seen raises the alert; wait for the cameras to pan away before crossing.",
+          "description_i18n": {
+            "en": "Being seen raises the alert; wait for the cameras to pan away before crossing.",
+            "pt": "Ser visto ativa o alerta; espere as câmeras girarem para o outro lado antes de passar."
+          }
+        },
+        {
+          "key": "note-the-gas-filled-corridor",
+          "title": "Note the gas-filled corridor",
+          "title_i18n": {
+            "en": "Note the gas-filled corridor",
+            "pt": "Notar o corredor cheio de gás"
+          },
+          "description": "You can't cross this passage yet — you'll need the gas mask found later.",
+          "description_i18n": {
+            "en": "You can't cross this passage yet — you'll need the gas mask found later.",
+            "pt": "Você ainda não consegue cruzar essa passagem — vai precisar da máscara de gás obtida mais tarde."
+          }
+        },
+        {
+          "key": "descend-to-the-holding-cells-b1",
+          "title": "Descend to the holding cells (B1)",
+          "title_i18n": {
+            "en": "Descend to the holding cells (B1)",
+            "pt": "Descer até as celas (B1)"
+          },
+          "description": "Take the elevator down to the cell block where the hostages are kept.",
+          "description_i18n": {
+            "en": "Take the elevator down to the cell block where the hostages are kept.",
+            "pt": "Pegue o elevador para descer até o bloco de celas onde os reféns estão presos."
+          }
+        },
+        {
+          "key": "meet-the-darpa-chief-donald-anderson",
+          "title": "Meet the DARPA Chief, Donald Anderson",
+          "title_i18n": {
+            "en": "Meet the DARPA Chief, Donald Anderson",
+            "pt": "Encontrar o Chefe da DARPA, Donald Anderson"
+          },
+          "description": "He gives you the detonation-code intel, then collapses from a 'heart attack'.",
+          "description_i18n": {
+            "en": "He gives you the detonation-code intel, then collapses from a 'heart attack'.",
+            "pt": "Ele passa a informação sobre o código de detonação e depois cai de um 'ataque cardíaco'."
+          }
+        },
+        {
+          "key": "subdue-the-guard-who-turns-out-to-be-meryl",
+          "title": "Subdue the guard who turns out to be Meryl",
+          "title_i18n": {
+            "en": "Subdue the guard who turns out to be Meryl",
+            "pt": "Render a guarda que se revela ser Meryl"
+          },
+          "description": "Grab her before she draws; she'll give you her codec frequency (140.15).",
+          "description_i18n": {
+            "en": "Grab her before she draws; she'll give you her codec frequency (140.15).",
+            "pt": "Segure-a antes que ela saque a arma; ela vai te dar a frequência de codec dela (140.15)."
+          }
+        },
+        {
+          "key": "pick-up-the-socom-pistol",
+          "title": "Pick up the SOCOM pistol",
+          "title_i18n": {
+            "en": "Pick up the SOCOM pistol",
+            "pt": "Pegar a pistola SOCOM"
+          },
+          "description": "Your first proper firearm — grab it before heading out to find ArmsTech's president.",
+          "description_i18n": {
+            "en": "Your first proper firearm — grab it before heading out to find ArmsTech's president.",
+            "pt": "Sua primeira arma de fogo de verdade — pegue antes de ir atrás do presidente da ArmsTech."
+          }
+        }
+      ]
+    },
+    {
+      "key": "revolver-ocelot-the-armory",
+      "title": "Revolver Ocelot & the Armory",
+      "title_i18n": {
+        "en": "Revolver Ocelot & the Armory",
+        "pt": "Revolver Ocelot e o Arsenal"
+      },
+      "items": [
+        {
+          "key": "find-president-kenneth-baker-rigged-with-explosi",
+          "title": "Find President Kenneth Baker rigged with explosives",
+          "title_i18n": {
+            "en": "Find President Kenneth Baker rigged with explosives",
+            "pt": "Encontrar o presidente Kenneth Baker preso com explosivos"
+          },
+          "description": "He's tied to C4 in a room guarded by Ocelot — don't fire wildly near him.",
+          "description_i18n": {
+            "en": "He's tied to C4 in a room guarded by Ocelot — don't fire wildly near him.",
+            "pt": "Ele está amarrado com C4 numa sala vigiada por Ocelot — não atire sem cuidado perto dele."
+          }
+        },
+        {
+          "key": "boss-revolver-ocelot-use-the-pillars-for-cover",
+          "title": "Boss: Revolver Ocelot — use the pillars for cover",
+          "title_i18n": {
+            "en": "Boss: Revolver Ocelot — use the pillars for cover",
+            "pt": "Chefe: Revolver Ocelot — use os pilares como cobertura"
+          },
+          "description": "Circle the pillars to break his line of fire and pop out to shoot.",
+          "description_i18n": {
+            "en": "Circle the pillars to break his line of fire and pop out to shoot.",
+            "pt": "Gire em volta dos pilares para cortar a linha de tiro dele e apareça só para atirar."
+          }
+        },
+        {
+          "key": "stay-away-from-the-walls",
+          "title": "Stay away from the walls",
+          "title_i18n": {
+            "en": "Stay away from the walls",
+            "pt": "Ficar longe das paredes"
+          },
+          "description": "Ocelot's shots ricochet off walls and can hit you from the side.",
+          "description_i18n": {
+            "en": "Ocelot's shots ricochet off walls and can hit you from the side.",
+            "pt": "Os tiros de Ocelot ricocheteiam nas paredes e podem te acertar de lado."
+          }
+        },
+        {
+          "key": "shoot-ocelot-while-he-reloads",
+          "title": "Shoot Ocelot while he reloads",
+          "title_i18n": {
+            "en": "Shoot Ocelot while he reloads",
+            "pt": "Atirar em Ocelot enquanto ele recarrega"
+          },
+          "description": "His revolver holds 6 rounds; hit him during the long reload after the sixth shot.",
+          "description_i18n": {
+            "en": "His revolver holds 6 rounds; hit him during the long reload after the sixth shot.",
+            "pt": "O revólver dele tem 6 tiros; acerte-o na recarga demorada depois do sexto disparo."
+          }
+        },
+        {
+          "key": "watch-the-cyborg-ninja-end-the-fight",
+          "title": "Watch the Cyborg Ninja end the fight",
+          "title_i18n": {
+            "en": "Watch the Cyborg Ninja end the fight",
+            "pt": "Ver o Cyborg Ninja encerrar a luta"
+          },
+          "description": "A mysterious ninja severs Ocelot's hand, cutting the battle short.",
+          "description_i18n": {
+            "en": "A mysterious ninja severs Ocelot's hand, cutting the battle short.",
+            "pt": "Um ninja misterioso decepa a mão de Ocelot e interrompe a batalha."
+          }
+        },
+        {
+          "key": "head-to-the-armory",
+          "title": "Head to the Armory",
+          "title_i18n": {
+            "en": "Head to the Armory",
+            "pt": "Ir até o Arsenal"
+          },
+          "description": "Backtrack through the hangar area to reach the weapons storage rooms.",
+          "description_i18n": {
+            "en": "Backtrack through the hangar area to reach the weapons storage rooms.",
+            "pt": "Volte pela área do hangar para chegar às salas de armazenamento de armas."
+          }
+        },
+        {
+          "key": "grab-the-fa-mas-assault-rifle",
+          "title": "Grab the FA-MAS assault rifle",
+          "title_i18n": {
+            "en": "Grab the FA-MAS assault rifle",
+            "pt": "Pegar o fuzil de assalto FA-MAS"
+          },
+          "description": "Your main automatic weapon — far stronger than the SOCOM for firefights.",
+          "description_i18n": {
+            "en": "Your main automatic weapon — far stronger than the SOCOM for firefights.",
+            "pt": "Sua arma automática principal — bem mais forte que a SOCOM em tiroteios."
+          }
+        },
+        {
+          "key": "collect-chaff-stun-and-frag-grenades",
+          "title": "Collect chaff, stun, and frag grenades",
+          "title_i18n": {
+            "en": "Collect chaff, stun, and frag grenades",
+            "pt": "Coletar granadas chaff, de atordoamento e de fragmentação"
+          },
+          "description": "Chaff disables cameras and electronics; stock all three types here.",
+          "description_i18n": {
+            "en": "Chaff disables cameras and electronics; stock all three types here.",
+            "pt": "As chaff desativam câmeras e eletrônicos; estoque os três tipos aqui."
+          }
+        },
+        {
+          "key": "pick-up-the-body-armor",
+          "title": "Pick up the body armor",
+          "title_i18n": {
+            "en": "Pick up the body armor",
+            "pt": "Pegar o colete à prova de balas"
+          },
+          "description": "Cuts the damage you take — equip it before the tough boss fights.",
+          "description_i18n": {
+            "en": "Cuts the damage you take — equip it before the tough boss fights.",
+            "pt": "Reduz o dano que você recebe — equipe antes das lutas difíceis contra chefes."
+          }
+        },
+        {
+          "key": "note-the-doors-that-need-c4",
+          "title": "Note the doors that need C4",
+          "title_i18n": {
+            "en": "Note the doors that need C4",
+            "pt": "Notar as portas que precisam de C4"
+          },
+          "description": "Some armory walls are breakable later once you find the C4 explosive.",
+          "description_i18n": {
+            "en": "Some armory walls are breakable later once you find the C4 explosive.",
+            "pt": "Algumas paredes do arsenal podem ser explodidas depois, quando você achar o C4."
+          }
+        }
+      ]
+    },
+    {
+      "key": "canyon-the-m1-tank",
+      "title": "Canyon & the M1 Tank",
+      "title_i18n": {
+        "en": "Canyon & the M1 Tank",
+        "pt": "Desfiladeiro e o Tanque M1"
+      },
+      "items": [
+        {
+          "key": "follow-meryl-s-directions-toward-the-nuke-buildi",
+          "title": "Follow Meryl's directions toward the nuke building",
+          "title_i18n": {
+            "en": "Follow Meryl's directions toward the nuke building",
+            "pt": "Seguir as orientações de Meryl rumo ao prédio nuclear"
+          },
+          "description": "Call her on 140.15 if you lose your bearings between areas.",
+          "description_i18n": {
+            "en": "Call her on 140.15 if you lose your bearings between areas.",
+            "pt": "Ligue para ela no 140.15 se ficar perdido entre as áreas."
+          }
+        },
+        {
+          "key": "cross-the-open-canyon-path",
+          "title": "Cross the open canyon path",
+          "title_i18n": {
+            "en": "Cross the open canyon path",
+            "pt": "Cruzar o caminho aberto do desfiladeiro"
+          },
+          "description": "The exposed valley is where an M1 tank ambushes you.",
+          "description_i18n": {
+            "en": "The exposed valley is where an M1 tank ambushes you.",
+            "pt": "O vale exposto é onde um tanque M1 arma uma emboscada."
+          }
+        },
+        {
+          "key": "boss-m1-abrams-tank",
+          "title": "Boss: M1 Abrams tank",
+          "title_i18n": {
+            "en": "Boss: M1 Abrams tank",
+            "pt": "Chefe: tanque M1 Abrams"
+          },
+          "description": "Take cover behind the rocks to avoid the main cannon and machine gun.",
+          "description_i18n": {
+            "en": "Take cover behind the rocks to avoid the main cannon and machine gun.",
+            "pt": "Use as pedras como cobertura para evitar o canhão principal e a metralhadora."
+          }
+        },
+        {
+          "key": "blind-the-tank-with-chaff-grenades",
+          "title": "Blind the tank with chaff grenades",
+          "title_i18n": {
+            "en": "Blind the tank with chaff grenades",
+            "pt": "Cegar o tanque com granadas chaff"
+          },
+          "description": "Chaff scrambles its targeting so it can't lock onto you.",
+          "description_i18n": {
+            "en": "Chaff scrambles its targeting so it can't lock onto you.",
+            "pt": "As chaff embaralham a mira dele e impedem que ele te fixe."
+          }
+        },
+        {
+          "key": "grenade-the-open-hatch",
+          "title": "Grenade the open hatch",
+          "title_i18n": {
+            "en": "Grenade the open hatch",
+            "pt": "Jogar granada na escotilha aberta"
+          },
+          "description": "When the commander pops out to fire, lob a frag grenade right into the hatch.",
+          "description_i18n": {
+            "en": "When the commander pops out to fire, lob a frag grenade right into the hatch.",
+            "pt": "Quando o comandante aparece para atirar, jogue uma granada de fragmentação direto na escotilha."
+          }
+        },
+        {
+          "key": "keep-moving-between-rocks",
+          "title": "Keep moving between rocks",
+          "title_i18n": {
+            "en": "Keep moving between rocks",
+            "pt": "Continuar se movendo entre as pedras"
+          },
+          "description": "Don't stay put — reposition after each throw to dodge the return fire.",
+          "description_i18n": {
+            "en": "Don't stay put — reposition after each throw to dodge the return fire.",
+            "pt": "Não fique parado — reposicione-se depois de cada arremesso para desviar do contra-ataque."
+          }
+        },
+        {
+          "key": "destroy-the-tank-and-advance",
+          "title": "Destroy the tank and advance",
+          "title_i18n": {
+            "en": "Destroy the tank and advance",
+            "pt": "Destruir o tanque e avançar"
+          },
+          "description": "A few good hatch hits finish it; then continue to the warhead storage.",
+          "description_i18n": {
+            "en": "A few good hatch hits finish it; then continue to the warhead storage.",
+            "pt": "Alguns acertos certeiros na escotilha resolvem; depois siga para o depósito de ogivas."
+          }
+        }
+      ]
+    },
+    {
+      "key": "nuclear-warhead-storage",
+      "title": "Nuclear Warhead Storage",
+      "title_i18n": {
+        "en": "Nuclear Warhead Storage",
+        "pt": "Depósito de Ogivas Nucleares"
+      },
+      "items": [
+        {
+          "key": "enter-the-nuclear-warhead-storage-building",
+          "title": "Enter the Nuclear Warhead Storage building",
+          "title_i18n": {
+            "en": "Enter the Nuclear Warhead Storage building",
+            "pt": "Entrar no prédio de armazenamento de ogivas"
+          },
+          "description": "This multi-level building holds key gear and the hiding Otacon.",
+          "description_i18n": {
+            "en": "This multi-level building holds key gear and the hiding Otacon.",
+            "pt": "Este prédio de vários andares guarda equipamentos importantes e o Otacon escondido."
+          }
+        },
+        {
+          "key": "find-otacon-hal-emmerich-hiding",
+          "title": "Find Otacon (Hal Emmerich) hiding",
+          "title_i18n": {
+            "en": "Find Otacon (Hal Emmerich) hiding",
+            "pt": "Encontrar Otacon (Hal Emmerich) escondido"
+          },
+          "description": "The terrified engineer gives you his codec frequency (141.12) and stealth help.",
+          "description_i18n": {
+            "en": "The terrified engineer gives you his codec frequency (141.12) and stealth help.",
+            "pt": "O engenheiro apavorado te passa a frequência de codec dele (141.12) e ajuda com furtividade."
+          }
+        },
+        {
+          "key": "pick-up-the-night-vision-goggles",
+          "title": "Pick up the night-vision goggles",
+          "title_i18n": {
+            "en": "Pick up the night-vision goggles",
+            "pt": "Pegar os óculos de visão noturna"
+          },
+          "description": "Essential for the pitch-black rooms in the lower basement levels.",
+          "description_i18n": {
+            "en": "Essential for the pitch-black rooms in the lower basement levels.",
+            "pt": "Essenciais para as salas totalmente escuras dos subsolos mais baixos."
+          }
+        },
+        {
+          "key": "descend-to-b1-and-b2",
+          "title": "Descend to B1 and B2",
+          "title_i18n": {
+            "en": "Descend to B1 and B2",
+            "pt": "Descer até o B1 e o B2"
+          },
+          "description": "Watch for infrared beams and gun cameras on the stairwells.",
+          "description_i18n": {
+            "en": "Watch for infrared beams and gun cameras on the stairwells.",
+            "pt": "Cuidado com os feixes infravermelhos e as câmeras armadas nas escadas."
+          }
+        },
+        {
+          "key": "grab-the-c4-explosive",
+          "title": "Grab the C4 explosive",
+          "title_i18n": {
+            "en": "Grab the C4 explosive",
+            "pt": "Pegar o explosivo C4"
+          },
+          "description": "Use it later to blow open cracked walls back in the armory and elsewhere.",
+          "description_i18n": {
+            "en": "Use it later to blow open cracked walls back in the armory and elsewhere.",
+            "pt": "Use depois para explodir paredes rachadas no arsenal e em outros lugares."
+          }
+        },
+        {
+          "key": "get-the-nikita-remote-guided-missile-launcher",
+          "title": "Get the Nikita remote-guided missile launcher",
+          "title_i18n": {
+            "en": "Get the Nikita remote-guided missile launcher",
+            "pt": "Pegar o lançador de mísseis guiados Nikita"
+          },
+          "description": "You steer its missile with the D-pad in first person after firing.",
+          "description_i18n": {
+            "en": "You steer its missile with the D-pad in first person after firing.",
+            "pt": "Você controla o míssil dele com o direcional em primeira pessoa depois de disparar."
+          }
+        },
+        {
+          "key": "destroy-the-electric-node-with-the-nikita",
+          "title": "Destroy the electric node with the Nikita",
+          "title_i18n": {
+            "en": "Destroy the electric node with the Nikita",
+            "pt": "Destruir o nó elétrico com a Nikita"
+          },
+          "description": "A live conduit blocks the path — guide a Nikita missile around the corner to hit it.",
+          "description_i18n": {
+            "en": "A live conduit blocks the path — guide a Nikita missile around the corner to hit it.",
+            "pt": "Um duto energizado bloqueia o caminho — guie o míssil da Nikita pela curva para atingi-lo."
+          }
+        },
+        {
+          "key": "save-and-stock-up-on-rations",
+          "title": "Save and stock up on rations",
+          "title_i18n": {
+            "en": "Save and stock up on rations",
+            "pt": "Salvar e reabastecer rações"
+          },
+          "description": "Rations auto-heal you in a pinch; grab any you find before the next boss.",
+          "description_i18n": {
+            "en": "Rations auto-heal you in a pinch; grab any you find before the next boss.",
+            "pt": "As rações curam automaticamente num aperto; pegue todas que achar antes do próximo chefe."
+          }
+        }
+      ]
+    },
+    {
+      "key": "cyborg-ninja-psycho-mantis",
+      "title": "Cyborg Ninja & Psycho Mantis",
+      "title_i18n": {
+        "en": "Cyborg Ninja & Psycho Mantis",
+        "pt": "Cyborg Ninja e Psycho Mantis"
+      },
+      "items": [
+        {
+          "key": "return-through-the-lab-area",
+          "title": "Return through the lab area",
+          "title_i18n": {
+            "en": "Return through the lab area",
+            "pt": "Voltar pela área do laboratório"
+          },
+          "description": "Backtrack toward the medical/lab rooms where the Ninja is waiting.",
+          "description_i18n": {
+            "en": "Backtrack toward the medical/lab rooms where the Ninja is waiting.",
+            "pt": "Volte na direção das salas médicas/laboratório onde o Ninja está à espera."
+          }
+        },
+        {
+          "key": "boss-cyborg-ninja-gray-fox",
+          "title": "Boss: Cyborg Ninja (Gray Fox)",
+          "title_i18n": {
+            "en": "Boss: Cyborg Ninja (Gray Fox)",
+            "pt": "Chefe: Cyborg Ninja (Gray Fox)"
+          },
+          "description": "He shrugs off bullets at first — open with hand-to-hand punches and kicks.",
+          "description_i18n": {
+            "en": "He shrugs off bullets at first — open with hand-to-hand punches and kicks.",
+            "pt": "No começo ele ignora as balas — comece no corpo a corpo com socos e chutes."
+          }
+        },
+        {
+          "key": "switch-to-the-fa-mas-when-his-armor-sparks",
+          "title": "Switch to the FA-MAS when his armor sparks",
+          "title_i18n": {
+            "en": "Switch to the FA-MAS when his armor sparks",
+            "pt": "Trocar para o FA-MAS quando a armadura dele soltar faíscas"
+          },
+          "description": "Once he's damaged and glowing, gunfire starts to connect.",
+          "description_i18n": {
+            "en": "Once he's damaged and glowing, gunfire starts to connect.",
+            "pt": "Depois de danificado e brilhando, os tiros começam a acertar."
+          }
+        },
+        {
+          "key": "wear-him-down-until-he-yields",
+          "title": "Wear him down until he yields",
+          "title_i18n": {
+            "en": "Wear him down until he yields",
+            "pt": "Desgastá-lo até ele ceder"
+          },
+          "description": "He says he only wants a worthy fight; keep pressing to end the battle.",
+          "description_i18n": {
+            "en": "He says he only wants a worthy fight; keep pressing to end the battle.",
+            "pt": "Ele diz que só quer uma luta à altura; continue pressionando para encerrar a batalha."
+          }
+        },
+        {
+          "key": "reach-the-commander-s-room",
+          "title": "Reach the Commander's Room",
+          "title_i18n": {
+            "en": "Reach the Commander's Room",
+            "pt": "Chegar à Sala do Comandante"
+          },
+          "description": "Meryl is here but acting strangely — Psycho Mantis is controlling her.",
+          "description_i18n": {
+            "en": "Meryl is here but acting strangely — Psycho Mantis is controlling her.",
+            "pt": "Meryl está aqui, mas agindo de forma estranha — Psycho Mantis a está controlando."
+          }
+        },
+        {
+          "key": "boss-psycho-mantis-reads-your-mind",
+          "title": "Boss: Psycho Mantis reads your mind",
+          "title_i18n": {
+            "en": "Boss: Psycho Mantis reads your mind",
+            "pt": "Chefe: Psycho Mantis lê sua mente"
+          },
+          "description": "He predicts every move and even comments on your memory card saves.",
+          "description_i18n": {
+            "en": "He predicts every move and even comments on your memory card saves.",
+            "pt": "Ele prevê cada movimento e até comenta os saves do seu cartão de memória."
+          }
+        },
+        {
+          "key": "move-the-controller-to-port-2",
+          "title": "Move the controller to port 2",
+          "title_i18n": {
+            "en": "Move the controller to port 2",
+            "pt": "Mudar o controle para a porta 2"
+          },
+          "description": "Unplug the pad and plug it into port 2 so Mantis can't read your inputs.",
+          "description_i18n": {
+            "en": "Unplug the pad and plug it into port 2 so Mantis can't read your inputs.",
+            "pt": "Desconecte o controle e ligue na porta 2 para que Mantis não consiga ler seus comandos."
+          }
+        },
+        {
+          "key": "don-t-let-mind-controlled-meryl-shoot-herself",
+          "title": "Don't let mind-controlled Meryl shoot herself",
+          "title_i18n": {
+            "en": "Don't let mind-controlled Meryl shoot herself",
+            "pt": "Não deixar a Meryl controlada atirar em si mesma"
+          },
+          "description": "Punch her out to break the spell if Mantis makes her point the gun at her head.",
+          "description_i18n": {
+            "en": "Punch her out to break the spell if Mantis makes her point the gun at her head.",
+            "pt": "Nocauteie-a para quebrar o controle se Mantis fizer ela apontar a arma para a própria cabeça."
+          }
+        },
+        {
+          "key": "shoot-mantis-when-he-s-visible-and-defeat-him",
+          "title": "Shoot Mantis when he's visible and defeat him",
+          "title_i18n": {
+            "en": "Shoot Mantis when he's visible and defeat him",
+            "pt": "Atirar em Mantis quando ele aparecer e derrotá-lo"
+          },
+          "description": "He turns invisible; fire the instant he materializes to attack.",
+          "description_i18n": {
+            "en": "He turns invisible; fire the instant he materializes to attack.",
+            "pt": "Ele fica invisível; atire no instante em que ele se materializa para atacar."
+          }
+        }
+      ]
+    },
+    {
+      "key": "caves-sniper-wolf-first-duel",
+      "title": "Caves & Sniper Wolf, First Duel",
+      "title_i18n": {
+        "en": "Caves & Sniper Wolf, First Duel",
+        "pt": "Cavernas e Sniper Wolf, Primeiro Duelo"
+      },
+      "items": [
+        {
+          "key": "follow-meryl-into-the-caves",
+          "title": "Follow Meryl into the caves",
+          "title_i18n": {
+            "en": "Follow Meryl into the caves",
+            "pt": "Seguir Meryl pelas cavernas"
+          },
+          "description": "She leads the way; stay close and mind the terrain.",
+          "description_i18n": {
+            "en": "She leads the way; stay close and mind the terrain.",
+            "pt": "Ela guia o caminho; fique perto e preste atenção no terreno."
+          }
+        },
+        {
+          "key": "fend-off-the-guard-dogs",
+          "title": "Fend off the guard dogs",
+          "title_i18n": {
+            "en": "Fend off the guard dogs",
+            "pt": "Enfrentar os cães de guarda"
+          },
+          "description": "Wolves roam the cave; use the SOCOM or run past them to the exit.",
+          "description_i18n": {
+            "en": "Wolves roam the cave; use the SOCOM or run past them to the exit.",
+            "pt": "Lobos rondam a caverna; use a SOCOM ou corra por eles até a saída."
+          }
+        },
+        {
+          "key": "watch-sniper-wolf-shoot-meryl",
+          "title": "Watch Sniper Wolf shoot Meryl",
+          "title_i18n": {
+            "en": "Watch Sniper Wolf shoot Meryl",
+            "pt": "Ver Sniper Wolf atirar em Meryl"
+          },
+          "description": "As Meryl steps into the open, a hidden sniper drops her — you're outgunned.",
+          "description_i18n": {
+            "en": "As Meryl steps into the open, a hidden sniper drops her — you're outgunned.",
+            "pt": "Quando Meryl entra na área aberta, uma atiradora escondida a derruba — você está em desvantagem."
+          }
+        },
+        {
+          "key": "retreat-you-need-a-sniper-rifle",
+          "title": "Retreat — you need a sniper rifle",
+          "title_i18n": {
+            "en": "Retreat — you need a sniper rifle",
+            "pt": "Recuar — você precisa de um rifle de precisão"
+          },
+          "description": "Your current weapons can't reach her; back off and go find long-range gear.",
+          "description_i18n": {
+            "en": "Your current weapons can't reach her; back off and go find long-range gear.",
+            "pt": "Suas armas atuais não a alcançam; recue e vá buscar equipamento de longo alcance."
+          }
+        },
+        {
+          "key": "backtrack-to-the-armory-for-the-psg-1",
+          "title": "Backtrack to the Armory for the PSG-1",
+          "title_i18n": {
+            "en": "Backtrack to the Armory for the PSG-1",
+            "pt": "Voltar ao Arsenal para pegar o PSG-1"
+          },
+          "description": "The PSG-1 sniper rifle is stored back in the armory — a long detour, but required.",
+          "description_i18n": {
+            "en": "The PSG-1 sniper rifle is stored back in the armory — a long detour, but required.",
+            "pt": "O rifle de precisão PSG-1 fica guardado no arsenal — um desvio longo, mas obrigatório."
+          }
+        },
+        {
+          "key": "return-and-equip-the-psg-1",
+          "title": "Return and equip the PSG-1",
+          "title_i18n": {
+            "en": "Return and equip the PSG-1",
+            "pt": "Voltar e equipar o PSG-1"
+          },
+          "description": "Head back to the sniping spot overlooking Wolf's position.",
+          "description_i18n": {
+            "en": "Head back to the sniping spot overlooking Wolf's position.",
+            "pt": "Volte ao ponto de tiro com vista para a posição da Wolf."
+          }
+        },
+        {
+          "key": "use-diazepam-to-steady-your-aim",
+          "title": "Use diazepam to steady your aim",
+          "title_i18n": {
+            "en": "Use diazepam to steady your aim",
+            "pt": "Usar diazepam para firmar a mira"
+          },
+          "description": "The scope sways badly; diazepam calms Snake's hands so the crosshair holds.",
+          "description_i18n": {
+            "en": "The scope sways badly; diazepam calms Snake's hands so the crosshair holds.",
+            "pt": "A luneta balança muito; o diazepam acalma as mãos de Snake e a mira fica parada."
+          }
+        },
+        {
+          "key": "snipe-and-defeat-sniper-wolf",
+          "title": "Snipe and defeat Sniper Wolf",
+          "title_i18n": {
+            "en": "Snipe and defeat Sniper Wolf",
+            "pt": "Atirar de longe e derrotar Sniper Wolf"
+          },
+          "description": "Trade shots across the field; land enough hits to win the first duel.",
+          "description_i18n": {
+            "en": "Trade shots across the field; land enough hits to win the first duel.",
+            "pt": "Troque tiros pela clareira; acerte o suficiente para vencer o primeiro duelo."
+          }
+        }
+      ]
+    },
+    {
+      "key": "torture-towers-the-hind-d",
+      "title": "Torture, Towers & the Hind D",
+      "title_i18n": {
+        "en": "Torture, Towers & the Hind D",
+        "pt": "Tortura, Torres e o Hind D"
+      },
+      "items": [
+        {
+          "key": "survive-ocelot-s-torture",
+          "title": "Survive Ocelot's torture",
+          "title_i18n": {
+            "en": "Survive Ocelot's torture",
+            "pt": "Sobreviver à tortura de Ocelot"
+          },
+          "description": "Rapidly tap the button to keep Snake's life bar from emptying.",
+          "description_i18n": {
+            "en": "Rapidly tap the button to keep Snake's life bar from emptying.",
+            "pt": "Aperte o botão rapidamente para não deixar a barra de vida de Snake zerar."
+          }
+        },
+        {
+          "key": "resist-do-not-submit",
+          "title": "Resist — do not submit",
+          "title_i18n": {
+            "en": "Resist — do not submit",
+            "pt": "Resistir — não se render"
+          },
+          "description": "Choosing to resist keeps Meryl alive and unlocks the infinite-ammo bandana ending.",
+          "description_i18n": {
+            "en": "Choosing to resist keeps Meryl alive and unlocks the infinite-ammo bandana ending.",
+            "pt": "Escolher resistir mantém Meryl viva e libera o final com a bandana de munição infinita."
+          }
+        },
+        {
+          "key": "fake-your-death-with-the-ketchup",
+          "title": "Fake your death with the ketchup",
+          "title_i18n": {
+            "en": "Fake your death with the ketchup",
+            "pt": "Fingir a morte com o ketchup"
+          },
+          "description": "In the cell, use the ketchup so the guard opens the door thinking you're dead.",
+          "description_i18n": {
+            "en": "In the cell, use the ketchup so the guard opens the door thinking you're dead.",
+            "pt": "Na cela, use o ketchup para o guarda abrir a porta achando que você está morto."
+          }
+        },
+        {
+          "key": "knock-out-the-guard-and-escape-the-cell",
+          "title": "Knock out the guard and escape the cell",
+          "title_i18n": {
+            "en": "Knock out the guard and escape the cell",
+            "pt": "Nocautear o guarda e escapar da cela"
+          },
+          "description": "Slip out when he steps in, then recover your confiscated gear nearby.",
+          "description_i18n": {
+            "en": "Slip out when he steps in, then recover your confiscated gear nearby.",
+            "pt": "Saia quando ele entrar e depois recupere seu equipamento confiscado ali perto."
+          }
+        },
+        {
+          "key": "climb-communication-tower-a",
+          "title": "Climb Communication Tower A",
+          "title_i18n": {
+            "en": "Climb Communication Tower A",
+            "pt": "Subir a Torre de Comunicação A"
+          },
+          "description": "Fight your way up the long stairwell with the FA-MAS as guards pour in.",
+          "description_i18n": {
+            "en": "Fight your way up the long stairwell with the FA-MAS as guards pour in.",
+            "pt": "Suba a longa escada abrindo caminho com o FA-MAS enquanto os guardas chegam."
+          }
+        },
+        {
+          "key": "rappel-down-the-wall-of-tower-b",
+          "title": "Rappel down the wall of Tower B",
+          "title_i18n": {
+            "en": "Rappel down the wall of Tower B",
+            "pt": "Descer de rapel pela parede da Torre B"
+          },
+          "description": "Press against the wall and descend, dodging the gunships as you drop.",
+          "description_i18n": {
+            "en": "Press against the wall and descend, dodging the gunships as you drop.",
+            "pt": "Encoste na parede e desça, desviando dos helicópteros durante a descida."
+          }
+        },
+        {
+          "key": "grab-the-stinger-missile-launcher",
+          "title": "Grab the Stinger missile launcher",
+          "title_i18n": {
+            "en": "Grab the Stinger missile launcher",
+            "pt": "Pegar o lançador de mísseis Stinger"
+          },
+          "description": "The heat-seeking Stinger is essential for the helicopter and Metal Gear REX.",
+          "description_i18n": {
+            "en": "The heat-seeking Stinger is essential for the helicopter and Metal Gear REX.",
+            "pt": "O Stinger, que busca calor, é essencial para o helicóptero e o Metal Gear REX."
+          }
+        },
+        {
+          "key": "boss-hind-d-helicopter-liquid",
+          "title": "Boss: Hind D helicopter (Liquid)",
+          "title_i18n": {
+            "en": "Boss: Hind D helicopter (Liquid)",
+            "pt": "Chefe: helicóptero Hind D (Liquid)"
+          },
+          "description": "Lock on with the Stinger and hold until the reticle turns red before firing.",
+          "description_i18n": {
+            "en": "Lock on with the Stinger and hold until the reticle turns red before firing.",
+            "pt": "Trave a mira com o Stinger e segure até o retículo ficar vermelho antes de disparar."
+          }
+        },
+        {
+          "key": "dodge-the-hind-s-rockets-and-gunfire",
+          "title": "Dodge the Hind's rockets and gunfire",
+          "title_i18n": {
+            "en": "Dodge the Hind's rockets and gunfire",
+            "pt": "Desviar dos foguetes e tiros do Hind"
+          },
+          "description": "Keep moving around the roof between shots and use rations to survive hits.",
+          "description_i18n": {
+            "en": "Keep moving around the roof between shots and use rations to survive hits.",
+            "pt": "Continue se movendo pelo telhado entre os disparos e use rações para aguentar os acertos."
+          }
+        }
+      ]
+    },
+    {
+      "key": "snowfield-blast-furnace-vulcan-raven",
+      "title": "Snowfield, Blast Furnace & Vulcan Raven",
+      "title_i18n": {
+        "en": "Snowfield, Blast Furnace & Vulcan Raven",
+        "pt": "Campo de Neve, Alto-Forno e Vulcan Raven"
+      },
+      "items": [
+        {
+          "key": "cross-the-open-snowfield",
+          "title": "Cross the open snowfield",
+          "title_i18n": {
+            "en": "Cross the open snowfield",
+            "pt": "Atravessar o campo de neve aberto"
+          },
+          "description": "Sniper Wolf is waiting for a rematch in this exposed clearing.",
+          "description_i18n": {
+            "en": "Sniper Wolf is waiting for a rematch in this exposed clearing.",
+            "pt": "Sniper Wolf espera pela revanche nesta clareira exposta."
+          }
+        },
+        {
+          "key": "second-duel-defeat-sniper-wolf-for-good",
+          "title": "Second duel: defeat Sniper Wolf for good",
+          "title_i18n": {
+            "en": "Second duel: defeat Sniper Wolf for good",
+            "pt": "Segundo duelo: derrotar Sniper Wolf de vez"
+          },
+          "description": "Use the PSG-1 with diazepam again; this fight ends her story.",
+          "description_i18n": {
+            "en": "Use the PSG-1 with diazepam again; this fight ends her story.",
+            "pt": "Use o PSG-1 com diazepam de novo; esta luta encerra a história dela."
+          }
+        },
+        {
+          "key": "keep-rations-ready-during-the-fight",
+          "title": "Keep rations ready during the fight",
+          "title_i18n": {
+            "en": "Keep rations ready during the fight",
+            "pt": "Manter rações prontas durante a luta"
+          },
+          "description": "Her shots hurt at range; heal between exchanges to outlast her.",
+          "description_i18n": {
+            "en": "Her shots hurt at range; heal between exchanges to outlast her.",
+            "pt": "Os tiros dela machucam à distância; cure-se entre as trocas para durar mais que ela."
+          }
+        },
+        {
+          "key": "move-through-the-blast-furnace",
+          "title": "Move through the Blast Furnace",
+          "title_i18n": {
+            "en": "Move through the Blast Furnace",
+            "pt": "Atravessar o Alto-Forno"
+          },
+          "description": "Time your crossing over the moving conveyor and avoid the flames.",
+          "description_i18n": {
+            "en": "Time your crossing over the moving conveyor and avoid the flames.",
+            "pt": "Cronometre a travessia sobre a esteira em movimento e evite as chamas."
+          }
+        },
+        {
+          "key": "cross-the-cargo-elevator",
+          "title": "Cross the cargo elevator",
+          "title_i18n": {
+            "en": "Cross the cargo elevator",
+            "pt": "Cruzar o elevador de carga"
+          },
+          "description": "Fight off the guards who ambush you on the platform as it moves.",
+          "description_i18n": {
+            "en": "Fight off the guards who ambush you on the platform as it moves.",
+            "pt": "Enfrente os guardas que te emboscam na plataforma enquanto ela se move."
+          }
+        },
+        {
+          "key": "reach-the-warehouse",
+          "title": "Reach the Warehouse",
+          "title_i18n": {
+            "en": "Reach the Warehouse",
+            "pt": "Chegar ao Armazém"
+          },
+          "description": "This large storage floor is Vulcan Raven's battleground.",
+          "description_i18n": {
+            "en": "This large storage floor is Vulcan Raven's battleground.",
+            "pt": "Este grande piso de estocagem é o campo de batalha de Vulcan Raven."
+          }
+        },
+        {
+          "key": "boss-vulcan-raven-with-the-gatling-gun",
+          "title": "Boss: Vulcan Raven with the gatling gun",
+          "title_i18n": {
+            "en": "Boss: Vulcan Raven with the gatling gun",
+            "pt": "Chefe: Vulcan Raven com a metralhadora gatling"
+          },
+          "description": "Stay out of his line of sight and never stand still in the open.",
+          "description_i18n": {
+            "en": "Stay out of his line of sight and never stand still in the open.",
+            "pt": "Fique fora da linha de visão dele e nunca pare no aberto."
+          }
+        },
+        {
+          "key": "plant-claymore-mines-in-his-path",
+          "title": "Plant Claymore mines in his path",
+          "title_i18n": {
+            "en": "Plant Claymore mines in his path",
+            "pt": "Plantar minas Claymore no caminho dele"
+          },
+          "description": "Lay Claymores around corners so he walks into them while chasing you.",
+          "description_i18n": {
+            "en": "Lay Claymores around corners so he walks into them while chasing you.",
+            "pt": "Coloque Claymores nas curvas para ele pisar nelas enquanto te persegue."
+          }
+        },
+        {
+          "key": "finish-him-with-nikita-or-grenades",
+          "title": "Finish him with Nikita or grenades",
+          "title_i18n": {
+            "en": "Finish him with Nikita or grenades",
+            "pt": "Acabar com ele usando Nikita ou granadas"
+          },
+          "description": "Guide Nikita missiles around the boxes or lob grenades from behind cover.",
+          "description_i18n": {
+            "en": "Guide Nikita missiles around the boxes or lob grenades from behind cover.",
+            "pt": "Guie os mísseis da Nikita pelas caixas ou jogue granadas de trás da cobertura."
+          }
+        }
+      ]
+    },
+    {
+      "key": "pal-keys-the-rex-hangar",
+      "title": "PAL Keys & the REX Hangar",
+      "title_i18n": {
+        "en": "PAL Keys & the REX Hangar",
+        "pt": "Chaves PAL e o Hangar do REX"
+      },
+      "items": [
+        {
+          "key": "obtain-the-pal-key",
+          "title": "Obtain the PAL key",
+          "title_i18n": {
+            "en": "Obtain the PAL key",
+            "pt": "Obter a chave PAL"
+          },
+          "description": "You must insert it into three keyholes to interact with Metal Gear's controls.",
+          "description_i18n": {
+            "en": "You must insert it into three keyholes to interact with Metal Gear's controls.",
+            "pt": "Você precisa inseri-la em três fechaduras para mexer nos controles do Metal Gear."
+          }
+        },
+        {
+          "key": "learn-the-temperature-trick",
+          "title": "Learn the temperature trick",
+          "title_i18n": {
+            "en": "Learn the temperature trick",
+            "pt": "Descobrir o truque da temperatura"
+          },
+          "description": "The key's shape and ID change with heat and cold — each slot needs a different state.",
+          "description_i18n": {
+            "en": "The key's shape and ID change with heat and cold — each slot needs a different state.",
+            "pt": "O formato e o ID da chave mudam com calor e frio — cada fechadura precisa de um estado diferente."
+          }
+        },
+        {
+          "key": "warm-the-key-near-the-steam",
+          "title": "Warm the key near the steam",
+          "title_i18n": {
+            "en": "Warm the key near the steam",
+            "pt": "Aquecer a chave perto do vapor"
+          },
+          "description": "Hold it by the hot steam/heater until it changes, then use it in the matching slot.",
+          "description_i18n": {
+            "en": "Hold it by the hot steam/heater until it changes, then use it in the matching slot.",
+            "pt": "Segure-a perto do vapor quente/aquecedor até ela mudar e use na fechadura correspondente."
+          }
+        },
+        {
+          "key": "cool-the-key-in-the-freezer-room",
+          "title": "Cool the key in the freezer room",
+          "title_i18n": {
+            "en": "Cool the key in the freezer room",
+            "pt": "Resfriar a chave na sala congelante"
+          },
+          "description": "Take it to the cold room until it changes again for the third insertion.",
+          "description_i18n": {
+            "en": "Take it to the cold room until it changes again for the third insertion.",
+            "pt": "Leve-a até a sala fria até ela mudar de novo para a terceira inserção."
+          }
+        },
+        {
+          "key": "insert-the-key-into-all-three-keyholes",
+          "title": "Insert the key into all three keyholes",
+          "title_i18n": {
+            "en": "Insert the key into all three keyholes",
+            "pt": "Inserir a chave nas três fechaduras"
+          },
+          "description": "Room temp, hot, and cold each match one slot — complete all three.",
+          "description_i18n": {
+            "en": "Room temp, hot, and cold each match one slot — complete all three.",
+            "pt": "Temperatura ambiente, quente e fria — cada uma corresponde a uma fechadura; complete as três."
+          }
+        },
+        {
+          "key": "descend-to-the-underground-rex-hangar",
+          "title": "Descend to the underground REX hangar",
+          "title_i18n": {
+            "en": "Descend to the underground REX hangar",
+            "pt": "Descer até o hangar subterrâneo do REX"
+          },
+          "description": "The elevator drops into the massive chamber where Metal Gear REX is stored.",
+          "description_i18n": {
+            "en": "The elevator drops into the massive chamber where Metal Gear REX is stored.",
+            "pt": "O elevador desce na câmara gigantesca onde o Metal Gear REX está guardado."
+          }
+        },
+        {
+          "key": "meet-otacon-at-metal-gear",
+          "title": "Meet Otacon at Metal Gear",
+          "title_i18n": {
+            "en": "Meet Otacon at Metal Gear",
+            "pt": "Reencontrar Otacon junto ao Metal Gear"
+          },
+          "description": "He explains REX's weak points before the fight begins.",
+          "description_i18n": {
+            "en": "He explains REX's weak points before the fight begins.",
+            "pt": "Ele explica os pontos fracos do REX antes de a luta começar."
+          }
+        },
+        {
+          "key": "learn-that-master-miller-is-really-liquid",
+          "title": "Learn that Master Miller is really Liquid",
+          "title_i18n": {
+            "en": "Learn that Master Miller is really Liquid",
+            "pt": "Descobrir que Master Miller é na verdade Liquid"
+          },
+          "description": "Naomi warns you over codec that the mentor's calls were Liquid all along.",
+          "description_i18n": {
+            "en": "Naomi warns you over codec that the mentor's calls were Liquid all along.",
+            "pt": "Naomi te avisa pelo codec que as ligações do mentor eram do Liquid o tempo todo."
+          }
+        }
+      ]
+    },
+    {
+      "key": "metal-gear-rex",
+      "title": "Metal Gear REX",
+      "title_i18n": {
+        "en": "Metal Gear REX",
+        "pt": "Metal Gear REX"
+      },
+      "items": [
+        {
+          "key": "enter-the-hangar-as-liquid-boards-rex",
+          "title": "Enter the hangar as Liquid boards REX",
+          "title_i18n": {
+            "en": "Enter the hangar as Liquid boards REX",
+            "pt": "Entrar no hangar enquanto Liquid embarca no REX"
+          },
+          "description": "Liquid pilots the walking tank; the two-phase boss fight begins.",
+          "description_i18n": {
+            "en": "Liquid pilots the walking tank; the two-phase boss fight begins.",
+            "pt": "Liquid pilota o tanque bípede; começa a luta de chefe em duas fases."
+          }
+        },
+        {
+          "key": "gray-fox-returns-to-help",
+          "title": "Gray Fox returns to help",
+          "title_i18n": {
+            "en": "Gray Fox returns to help",
+            "pt": "Gray Fox volta para ajudar"
+          },
+          "description": "The Cyborg Ninja reappears and buys you openings against REX.",
+          "description_i18n": {
+            "en": "The Cyborg Ninja reappears and buys you openings against REX.",
+            "pt": "O Cyborg Ninja reaparece e abre brechas para você atacar o REX."
+          }
+        },
+        {
+          "key": "phase-1-destroy-the-radome",
+          "title": "Phase 1: destroy the radome",
+          "title_i18n": {
+            "en": "Phase 1: destroy the radome",
+            "pt": "Fase 1: destruir a antena radar (radome)"
+          },
+          "description": "Blow off REX's radar dome with Stinger missiles so it loses its targeting.",
+          "description_i18n": {
+            "en": "Blow off REX's radar dome with Stinger missiles so it loses its targeting.",
+            "pt": "Exploda a cúpula de radar do REX com mísseis Stinger para ele perder a mira."
+          }
+        },
+        {
+          "key": "follow-otacon-s-guidance-to-the-weak-spot",
+          "title": "Follow Otacon's guidance to the weak spot",
+          "title_i18n": {
+            "en": "Follow Otacon's guidance to the weak spot",
+            "pt": "Seguir a orientação de Otacon até o ponto fraco"
+          },
+          "description": "Call him if you can't tell where to aim during each phase.",
+          "description_i18n": {
+            "en": "Call him if you can't tell where to aim during each phase.",
+            "pt": "Ligue para ele se não souber onde mirar em cada fase."
+          }
+        },
+        {
+          "key": "watch-gray-fox-get-crushed-exposing-the-cockpit",
+          "title": "Watch Gray Fox get crushed, exposing the cockpit",
+          "title_i18n": {
+            "en": "Watch Gray Fox get crushed, exposing the cockpit",
+            "pt": "Ver Gray Fox ser esmagado, expondo a cabine"
+          },
+          "description": "His sacrifice forces the cockpit open for phase two.",
+          "description_i18n": {
+            "en": "His sacrifice forces the cockpit open for phase two.",
+            "pt": "O sacrifício dele força a cabine a se abrir para a segunda fase."
+          }
+        },
+        {
+          "key": "phase-2-hit-the-exposed-cockpit",
+          "title": "Phase 2: hit the exposed cockpit",
+          "title_i18n": {
+            "en": "Phase 2: hit the exposed cockpit",
+            "pt": "Fase 2: acertar a cabine exposta"
+          },
+          "description": "Fire Stinger missiles straight at Liquid in the open cockpit.",
+          "description_i18n": {
+            "en": "Fire Stinger missiles straight at Liquid in the open cockpit.",
+            "pt": "Dispare mísseis Stinger direto no Liquid na cabine aberta."
+          }
+        },
+        {
+          "key": "dodge-the-laser-missiles-and-stomps",
+          "title": "Dodge the laser, missiles, and stomps",
+          "title_i18n": {
+            "en": "Dodge the laser, missiles, and stomps",
+            "pt": "Desviar do laser, dos mísseis e das pisadas"
+          },
+          "description": "Keep circling REX and reload behind cover between missile volleys.",
+          "description_i18n": {
+            "en": "Keep circling REX and reload behind cover between missile volleys.",
+            "pt": "Continue girando ao redor do REX e recarregue atrás de cobertura entre as rajadas de mísseis."
+          }
+        },
+        {
+          "key": "destroy-metal-gear-rex",
+          "title": "Destroy Metal Gear REX",
+          "title_i18n": {
+            "en": "Destroy Metal Gear REX",
+            "pt": "Destruir o Metal Gear REX"
+          },
+          "description": "Enough cockpit hits finally bring the machine down.",
+          "description_i18n": {
+            "en": "Enough cockpit hits finally bring the machine down.",
+            "pt": "Acertos suficientes na cabine finalmente derrubam a máquina."
+          }
+        }
+      ]
+    },
+    {
+      "key": "escape-liquid-the-jeep",
+      "title": "Escape: Liquid & the Jeep",
+      "title_i18n": {
+        "en": "Escape: Liquid & the Jeep",
+        "pt": "Fuga: Liquid e o Jipe"
+      },
+      "items": [
+        {
+          "key": "climb-onto-the-rex-wreck",
+          "title": "Climb onto the REX wreck",
+          "title_i18n": {
+            "en": "Climb onto the REX wreck",
+            "pt": "Subir nos destroços do REX"
+          },
+          "description": "Liquid survives the crash and challenges you on top of the ruined machine.",
+          "description_i18n": {
+            "en": "Liquid survives the crash and challenges you on top of the ruined machine.",
+            "pt": "Liquid sobrevive à queda e te desafia em cima da máquina destruída."
+          }
+        },
+        {
+          "key": "boss-liquid-snake-fistfight",
+          "title": "Boss: Liquid Snake fistfight",
+          "title_i18n": {
+            "en": "Boss: Liquid Snake fistfight",
+            "pt": "Chefe: luta de socos contra Liquid Snake"
+          },
+          "description": "Hand-to-hand only — punch combos and grapple throws, no weapons.",
+          "description_i18n": {
+            "en": "Hand-to-hand only — punch combos and grapple throws, no weapons.",
+            "pt": "Só corpo a corpo — combos de soco e projeções, sem armas."
+          }
+        },
+        {
+          "key": "beat-the-time-limit",
+          "title": "Beat the time limit",
+          "title_i18n": {
+            "en": "Beat the time limit",
+            "pt": "Vencer dentro do tempo"
+          },
+          "description": "You have about three minutes before the base blows; don't stall.",
+          "description_i18n": {
+            "en": "You have about three minutes before the base blows; don't stall.",
+            "pt": "Você tem cerca de três minutos antes de a base explodir; não enrole."
+          }
+        },
+        {
+          "key": "knock-liquid-off-the-platform",
+          "title": "Knock Liquid off the platform",
+          "title_i18n": {
+            "en": "Knock Liquid off the platform",
+            "pt": "Jogar Liquid para fora da plataforma"
+          },
+          "description": "Push him toward the edge and avoid being thrown off yourself.",
+          "description_i18n": {
+            "en": "Push him toward the edge and avoid being thrown off yourself.",
+            "pt": "Empurre-o para a beirada e evite ser arremessado você mesmo."
+          }
+        },
+        {
+          "key": "race-through-the-collapsing-base",
+          "title": "Race through the collapsing base",
+          "title_i18n": {
+            "en": "Race through the collapsing base",
+            "pt": "Correr pela base em colapso"
+          },
+          "description": "Reunite with your ally and reach the waiting jeep before time runs out.",
+          "description_i18n": {
+            "en": "Reunite with your ally and reach the waiting jeep before time runs out.",
+            "pt": "Reencontre seu aliado e chegue ao jipe à espera antes que o tempo acabe."
+          }
+        },
+        {
+          "key": "drive-the-jeep-escape-sequence",
+          "title": "Drive the jeep escape sequence",
+          "title_i18n": {
+            "en": "Drive the jeep escape sequence",
+            "pt": "Dirigir a sequência de fuga no jipe"
+          },
+          "description": "Steer through the corridors while enemies chase you down the tunnel.",
+          "description_i18n": {
+            "en": "Steer through the corridors while enemies chase you down the tunnel.",
+            "pt": "Dirija pelos corredores enquanto os inimigos te perseguem pelo túnel."
+          }
+        },
+        {
+          "key": "shoot-the-pursuing-guards-and-vehicles",
+          "title": "Shoot the pursuing guards and vehicles",
+          "title_i18n": {
+            "en": "Shoot the pursuing guards and vehicles",
+            "pt": "Atirar nos guardas e veículos que perseguem"
+          },
+          "description": "Your passenger drives while you gun down the chasers from the back.",
+          "description_i18n": {
+            "en": "Your passenger drives while you gun down the chasers from the back.",
+            "pt": "Seu passageiro dirige enquanto você derruba os perseguidores por trás."
+          }
+        },
+        {
+          "key": "reach-the-exit-and-watch-the-ending",
+          "title": "Reach the exit and watch the ending",
+          "title_i18n": {
+            "en": "Reach the exit and watch the ending",
+            "pt": "Chegar à saída e ver o final"
+          },
+          "description": "Your passenger is Meryl if you resisted torture, or Otacon if you submitted.",
+          "description_i18n": {
+            "en": "Your passenger is Meryl if you resisted torture, or Otacon if you submitted.",
+            "pt": "Seu passageiro é a Meryl se você resistiu à tortura, ou o Otacon se você se rendeu."
+          }
+        },
+        {
+          "key": "optional-unlock-your-reward-for-replaying",
+          "title": "Optional: unlock your reward for replaying",
+          "title_i18n": {
+            "en": "Optional: unlock your reward for replaying",
+            "pt": "Opcional: liberar sua recompensa para rejogar"
+          },
+          "description": "Finishing nets the infinite-ammo bandana (Meryl) or stealth camo (Otacon) for a new game.",
+          "description_i18n": {
+            "en": "Finishing nets the infinite-ammo bandana (Meryl) or stealth camo (Otacon) for a new game.",
+            "pt": "Terminar concede a bandana de munição infinita (Meryl) ou a camuflagem furtiva (Otacon) para um novo jogo."
+          }
+        }
+      ]
+    }
+  ]
+}

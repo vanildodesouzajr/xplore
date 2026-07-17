@@ -6,7 +6,9 @@
     "dev": "next dev",
     "build": "next build",
     "start": "next start",
-    "lint": "eslint"
+    "lint": "eslint",
+    "games:export": "node --env-file=.env.local scripts/games/sync.mjs export",
+    "games:import": "node --env-file=.env.local scripts/games/sync.mjs import"
   },
   "dependencies": {
     "@base-ui/react": "^1.6.0",

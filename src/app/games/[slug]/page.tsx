@@ -5,6 +5,7 @@ import { createClient } from "@/lib/supabase/server";
 import { ChecklistNavigator } from "@/components/checklist-navigator";
 import { ProgressBar } from "@/components/progress-bar";
 import { Button } from "@/components/ui/button";
+import { PageContainer } from "@/components/page-container";
 import { computeCompletionPercent } from "@/lib/progress";
 import { getLocale } from "@/i18n/get-locale";
 import { getDictionary, t } from "@/i18n/get-dictionary";
@@ -45,7 +46,7 @@ export default async function GameDetailPage({
     ? await supabase
         .from("checklist_items")
         .select(
-          "id, category_id, title, title_i18n, description, description_i18n, order_index"
+          "id, category_id, title, title_i18n, description, description_i18n, image_url, order_index"
         )
         .in("category_id", categoryIds)
         .order("order_index")
@@ -78,6 +79,7 @@ export default async function GameDetailPage({
         description: item.description
           ? pick(item.description_i18n, locale, item.description)
           : null,
+        imageUrl: item.image_url,
         completed: completedIds.has(item.id),
       })),
   }));
@@ -96,7 +98,7 @@ export default async function GameDetailPage({
     "";
 
   return (
-    <div className="mx-auto flex w-full max-w-4xl flex-col gap-6 p-6">
+    <PageContainer>
       <div className="flex items-start justify-between gap-4">
         <div className="flex items-start gap-4">
           {game.cover_url && (
@@ -175,6 +177,6 @@ export default async function GameDetailPage({
           toggleAction={toggleItemCompletionAction}
         />
       )}
-    </div>
+    </PageContainer>
   );
 }

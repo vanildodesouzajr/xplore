@@ -23,7 +23,6 @@ export function AuthShell({
               width={60}
               height={60}
               priority
-              className="rounded-2xl shadow-lg ring-1 ring-border"
             />
           </Link>
           <div className="flex flex-col gap-1">

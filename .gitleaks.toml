@@ -1,0 +1,12 @@
+# Curated game content (content/games/*.json) uses a `key` field holding stable
+# slug identifiers (e.g. "phase-1-destroy-the-radome"). gitleaks' generic-api-key
+# rule flags these as high-entropy secrets, but they are public walkthrough
+# content and never contain credentials — so allowlist that path.
+[extend]
+useDefault = true
+
+[allowlist]
+description = "Curated game content keys are slugs, not secrets"
+paths = [
+  '''content/games/.*\.json$''',
+]

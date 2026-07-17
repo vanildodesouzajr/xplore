@@ -2,6 +2,7 @@ import { redirect } from "next/navigation";
 import { createClient } from "@/lib/supabase/server";
 import { ProfileForm } from "@/components/profile-form";
 import { DeleteAccountForm } from "@/components/delete-account-form";
+import { PageContainer } from "@/components/page-container";
 import { getLocale } from "@/i18n/get-locale";
 import { getDictionary } from "@/i18n/get-dictionary";
 import { updateProfileAction, deleteAccountAction } from "./actions";
@@ -25,7 +26,7 @@ export default async function AccountPage() {
   const initial = name.trim().charAt(0).toUpperCase() || "?";
 
   return (
-    <div className="mx-auto flex w-full max-w-md flex-col gap-6 p-6">
+    <PageContainer>
       <div className="flex items-center gap-3">
         <div className="flex size-12 items-center justify-center overflow-hidden rounded-full bg-primary/15 text-lg font-semibold text-primary ring-1 ring-border">
           {profile?.avatar_url ? (
@@ -80,6 +81,6 @@ export default async function AccountPage() {
           }}
         />
       </div>
-    </div>
+    </PageContainer>
   );
 }

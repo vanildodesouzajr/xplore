@@ -4,10 +4,12 @@ import { ChevronLeft } from "lucide-react";
 import { createClient } from "@/lib/supabase/server";
 import { AddCategoryForm } from "@/components/add-category-form";
 import { AddItemForm } from "@/components/add-item-form";
+import { ItemImage } from "@/components/item-image";
+import { PageContainer } from "@/components/page-container";
 import { getLocale } from "@/i18n/get-locale";
 import { getDictionary, t } from "@/i18n/get-dictionary";
 import { pick } from "@/i18n/pick";
-import { addCategoryAction, addItemAction } from "./actions";
+import { addCategoryAction, addItemAction, setItemImageAction } from "./actions";
 
 export default async function EditGamePage({
   params,
@@ -46,7 +48,7 @@ export default async function EditGamePage({
     ? await supabase
         .from("checklist_items")
         .select(
-          "id, category_id, title, title_i18n, description, description_i18n, order_index"
+          "id, category_id, title, title_i18n, description, description_i18n, image_url, order_index"
         )
         .in("category_id", categoryIds)
         .order("order_index")
@@ -59,8 +61,16 @@ export default async function EditGamePage({
     adding: d.adding,
   };
 
+  const imageLabels = {
+    add: d.itemImageAdd,
+    change: d.itemImageChange,
+    remove: d.itemImageRemove,
+    uploading: d.itemImageUploading,
+    error: d.itemImageError,
+  };
+
   return (
-    <div className="mx-auto flex w-full max-w-2xl flex-col gap-6 p-6">
+    <PageContainer>
       <div className="flex flex-col gap-1">
         <Link
           href={`/games/${slug}`}
@@ -97,13 +107,25 @@ export default async function EditGamePage({
                     return (
                       <li
                         key={item.id}
-                        className="flex items-start gap-2 text-muted-foreground"
+                        className="flex flex-col gap-1.5 text-muted-foreground"
                       >
-                        <span className="mt-1.5 size-1 shrink-0 rounded-full bg-muted-foreground/50" />
-                        <span>
-                          <span className="text-foreground">{title}</span>
-                          {description ? ` — ${description}` : ""}
-                        </span>
+                        <div className="flex items-start gap-2">
+                          <span className="mt-1.5 size-1 shrink-0 rounded-full bg-muted-foreground/50" />
+                          <span>
+                            <span className="text-foreground">{title}</span>
+                            {description ? ` — ${description}` : ""}
+                          </span>
+                        </div>
+                        <div className="pl-3">
+                          <ItemImage
+                            itemId={item.id}
+                            gameId={game.id}
+                            userId={userId!}
+                            imageUrl={item.image_url}
+                            labels={imageLabels}
+                            onPersist={setItemImageAction}
+                          />
+                        </div>
                       </li>
                     );
                   })}
@@ -135,6 +157,6 @@ export default async function EditGamePage({
           }}
         />
       </div>
-    </div>
+    </PageContainer>
   );
 }

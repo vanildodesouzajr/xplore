@@ -1,6 +1,7 @@
 import Link from "next/link";
 import { ChevronLeft } from "lucide-react";
 import { NewGameForm } from "@/components/new-game-form";
+import { PageContainer } from "@/components/page-container";
 import { getLocale } from "@/i18n/get-locale";
 import { getDictionary } from "@/i18n/get-dictionary";
 
@@ -9,7 +10,7 @@ export default async function NewGamePage() {
   const d = dict.newGame;
 
   return (
-    <div className="mx-auto flex w-full max-w-md flex-col gap-4 p-6">
+    <PageContainer className="gap-4">
       <Link
         href="/games"
         className="flex w-fit items-center gap-1 text-sm text-muted-foreground transition-colors hover:text-foreground"
@@ -33,6 +34,6 @@ export default async function NewGamePage() {
           submitting: d.submitting,
         }}
       />
-    </div>
+    </PageContainer>
   );
 }

@@ -1,6 +1,7 @@
 "use client";
 
-import { useActionState } from "react";
+import { useActionState, useState } from "react";
+import { Eye, EyeOff } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
@@ -23,6 +24,7 @@ export function AuthForm({
     error: null,
     message: null,
   });
+  const [showPassword, setShowPassword] = useState(false);
 
   return (
     <form action={formAction} className="flex flex-col gap-4">
@@ -38,14 +40,28 @@ export function AuthForm({
       </div>
       <div className="flex flex-col gap-1.5">
         <Label htmlFor="password">{labels.password}</Label>
-        <Input
-          id="password"
-          name="password"
-          type="password"
-          required
-          minLength={6}
-          autoComplete="current-password"
-        />
+        <div className="relative">
+          <Input
+            id="password"
+            name="password"
+            type={showPassword ? "text" : "password"}
+            required
+            minLength={6}
+            autoComplete="current-password"
+          />
+          <button
+            type="button"
+            onClick={() => setShowPassword(!showPassword)}
+            className="absolute right-3 top-1/2 -translate-y-1/2 p-0 h-auto bg-transparent hover:bg-transparent border-0 text-muted-foreground hover:text-foreground transition-colors"
+            aria-label={showPassword ? "Hide password" : "Show password"}
+          >
+            {showPassword ? (
+              <EyeOff className="w-5 h-5" strokeWidth={1.5} />
+            ) : (
+              <Eye className="w-5 h-5" strokeWidth={1.5} />
+            )}
+          </button>
+        </div>
       </div>
       {state.error && <p className="text-sm text-destructive">{state.error}</p>}
       {state.message && (

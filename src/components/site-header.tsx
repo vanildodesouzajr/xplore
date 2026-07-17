@@ -42,7 +42,6 @@ export async function SiteHeader() {
               alt="Xplore"
               width={30}
               height={30}
-              className="rounded-lg ring-1 ring-border"
               priority
             />
             <span>Xplore</span>

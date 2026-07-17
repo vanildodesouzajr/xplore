@@ -70,6 +70,7 @@ export interface Database {
         Row: {
           id: string
           game_id: string
+          key: string | null
           title: string
           title_i18n: Json
           order_index: number
@@ -78,6 +79,7 @@ export interface Database {
         Insert: {
           id?: string
           game_id: string
+          key?: string | null
           title: string
           title_i18n?: Json
           order_index?: number
@@ -86,6 +88,7 @@ export interface Database {
         Update: {
           id?: string
           game_id?: string
+          key?: string | null
           title?: string
           title_i18n?: Json
           order_index?: number
@@ -104,30 +107,36 @@ export interface Database {
         Row: {
           id: string
           category_id: string
+          key: string | null
           title: string
           title_i18n: Json
           description: string | null
           description_i18n: Json
+          image_url: string | null
           order_index: number
           created_at: string
         }
         Insert: {
           id?: string
           category_id: string
+          key?: string | null
           title: string
           title_i18n?: Json
           description?: string | null
           description_i18n?: Json
+          image_url?: string | null
           order_index?: number
           created_at?: string
         }
         Update: {
           id?: string
           category_id?: string
+          key?: string | null
           title?: string
           title_i18n?: Json
           description?: string | null
           description_i18n?: Json
+          image_url?: string | null
           order_index?: number
           created_at?: string
         }
