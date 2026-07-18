@@ -1,0 +1,106 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover" />
+    <meta name="theme-color" content="#0d1417" />
+    <title>Xplore — Offline</title>
+    <style>
+      :root {
+        color-scheme: dark;
+      }
+      * {
+        box-sizing: border-box;
+      }
+      html,
+      body {
+        height: 100%;
+        margin: 0;
+      }
+      body {
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        padding: 1.5rem;
+        background: #0d1417;
+        color: #e6edf0;
+        font-family:
+          ui-sans-serif, system-ui, -apple-system, "Segoe UI", Roboto,
+          Helvetica, Arial, sans-serif;
+        text-align: center;
+        -webkit-font-smoothing: antialiased;
+      }
+      .card {
+        max-width: 22rem;
+        width: 100%;
+      }
+      img {
+        width: 64px;
+        height: 64px;
+        border-radius: 14px;
+        margin: 0 auto 1.5rem;
+        display: block;
+      }
+      h1 {
+        font-size: 1.25rem;
+        font-weight: 600;
+        margin: 0 0 0.5rem;
+      }
+      p {
+        font-size: 0.9rem;
+        line-height: 1.5;
+        color: #9fb0b8;
+        margin: 0 0 1.75rem;
+      }
+      button {
+        appearance: none;
+        border: 0;
+        cursor: pointer;
+        width: 100%;
+        padding: 0.7rem 1rem;
+        border-radius: 0.6rem;
+        background: #e6edf0;
+        color: #0d1417;
+        font-size: 0.9rem;
+        font-weight: 600;
+        font-family: inherit;
+      }
+      button:active {
+        opacity: 0.85;
+      }
+    </style>
+  </head>
+  <body>
+    <div class="card">
+      <img src="/icon-192.png" alt="Xplore" />
+      <h1 data-i18n="title">You're offline</h1>
+      <p data-i18n="body">
+        Xplore needs a connection to load your checklists. Check your network
+        and try again.
+      </p>
+      <button type="button" onclick="location.reload()" data-i18n="retry">
+        Try again
+      </button>
+    </div>
+    <script>
+      // Static page — no server render — so localize on the client from the
+      // browser language. Keep the keys in sync with the app dictionaries.
+      (function () {
+        var isPt = (navigator.language || "en").toLowerCase().indexOf("pt") === 0;
+        if (!isPt) return;
+        document.documentElement.lang = "pt";
+        var pt = {
+          title: "Você está offline",
+          body:
+            "O Xplore precisa de conexão para carregar suas checklists. " +
+            "Verifique sua rede e tente novamente.",
+          retry: "Tentar novamente",
+        };
+        document.querySelectorAll("[data-i18n]").forEach(function (el) {
+          var key = el.getAttribute("data-i18n");
+          if (pt[key]) el.textContent = pt[key];
+        });
+      })();
+    </script>
+  </body>
+</html>
