@@ -18,6 +18,7 @@ export function GameCard({
   footer,
   completeLabel,
   coverUrl,
+  completionistBadge,
 }: {
   title: string;
   platform: string;
@@ -26,6 +27,7 @@ export function GameCard({
   footer?: React.ReactNode;
   completeLabel?: string;
   coverUrl?: string | null;
+  completionistBadge?: string | null;
 }) {
   const complete = percent === 100;
 
@@ -55,6 +57,11 @@ export function GameCard({
               <span className="inline-flex items-center rounded-md bg-muted px-1.5 py-0.5 text-xs font-medium text-muted-foreground">
                 {platform}
               </span>
+              {completionistBadge && (
+                <span className="inline-flex items-center rounded-md bg-muted px-1.5 py-0.5 text-xs font-medium text-muted-foreground">
+                  {completionistBadge}
+                </span>
+              )}
               {complete && completeLabel && (
                 <span className="inline-flex items-center rounded-md bg-success/15 px-1.5 py-0.5 text-xs font-medium text-success">
                   {completeLabel}

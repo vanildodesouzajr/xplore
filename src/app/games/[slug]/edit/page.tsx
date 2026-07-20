@@ -4,12 +4,18 @@ import { ChevronLeft } from "lucide-react";
 import { createClient } from "@/lib/supabase/server";
 import { AddCategoryForm } from "@/components/add-category-form";
 import { AddItemForm } from "@/components/add-item-form";
+import { AddTrophyForm } from "@/components/add-trophy-form";
 import { ItemImage } from "@/components/item-image";
 import { PageContainer } from "@/components/page-container";
 import { getLocale } from "@/i18n/get-locale";
 import { getDictionary, t } from "@/i18n/get-dictionary";
 import { pick } from "@/i18n/pick";
-import { addCategoryAction, addItemAction, setItemImageAction } from "./actions";
+import {
+  addCategoryAction,
+  addItemAction,
+  addTrophyAction,
+  setItemImageAction,
+} from "./actions";
 
 export default async function EditGamePage({
   params,
@@ -60,6 +66,14 @@ export default async function EditGamePage({
     add: d.addItem,
     adding: d.adding,
   };
+
+  const td = dict.trophies;
+
+  const { data: trophies } = await supabase
+    .from("trophies")
+    .select("id, title, title_i18n, description, description_i18n, tier, order_index")
+    .eq("game_id", game.id)
+    .order("order_index");
 
   const imageLabels = {
     add: d.itemImageAdd,
@@ -154,6 +168,54 @@ export default async function EditGamePage({
             placeholder: d.categoryPlaceholder,
             add: d.addCategory,
             adding: d.adding,
+          }}
+        />
+      </div>
+
+      {/* Trophies are a separate system from the checklist above — own table,
+          own progress, listed here only because they share this edit page. */}
+      <div className="flex flex-col gap-3 rounded-xl border bg-card p-4">
+        <h2 className="font-heading text-base font-semibold">
+          {td.edit.sectionTitle}
+        </h2>
+        {trophies && trophies.length > 0 ? (
+          <ul className="flex flex-col gap-1.5 text-sm">
+            {trophies.map((trophy) => (
+              <li key={trophy.id} className="flex items-start gap-2 text-muted-foreground">
+                <span className="mt-1.5 size-1 shrink-0 rounded-full bg-muted-foreground/50" />
+                <span>
+                  <span className="text-foreground">
+                    {pick(trophy.title_i18n, locale, trophy.title)}
+                  </span>{" "}
+                  <span className="text-xs">
+                    ({td.tiers[trophy.tier as keyof typeof td.tiers] ?? trophy.tier})
+                  </span>
+                  {trophy.description
+                    ? ` — ${pick(trophy.description_i18n, locale, trophy.description)}`
+                    : ""}
+                </span>
+              </li>
+            ))}
+          </ul>
+        ) : (
+          <p className="text-sm text-muted-foreground">{td.empty}</p>
+        )}
+      </div>
+
+      <div className="rounded-xl border border-dashed p-4">
+        <h2 className="mb-3 text-sm font-medium text-muted-foreground">
+          {td.edit.sectionTitle}
+        </h2>
+        <AddTrophyForm
+          gameId={game.id}
+          action={addTrophyAction}
+          labels={{
+            titlePlaceholder: td.edit.titlePlaceholder,
+            descPlaceholder: td.edit.descPlaceholder,
+            tierLabel: td.edit.tierLabel,
+            tiers: td.tiers,
+            add: td.edit.add,
+            adding: td.edit.adding,
           }}
         />
       </div>

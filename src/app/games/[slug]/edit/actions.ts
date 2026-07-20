@@ -56,6 +56,44 @@ export async function setItemImageAction(
   revalidatePath("/games/[slug]", "page");
 }
 
+// Trophies are a separate system from the checklist categories/items above —
+// own table, own RLS — added here only because they share the same edit page.
+export async function addTrophyAction(
+  gameId: string,
+  _prevState: EditFormState,
+  formData: FormData
+): Promise<EditFormState> {
+  const title = ((formData.get("title") as string) ?? "").trim();
+  const description = ((formData.get("description") as string) ?? "").trim();
+  const tier = ((formData.get("tier") as string) ?? "bronze").trim();
+  const locale = await getLocale();
+  const dict = getDictionary(locale);
+  if (!title) return { error: dict.trophies.edit.titleRequired };
+
+  const supabase = await createClient();
+
+  const { count } = await supabase
+    .from("trophies")
+    .select("id", { count: "exact", head: true })
+    .eq("game_id", gameId);
+
+  const { error } = await supabase.from("trophies").insert({
+    game_id: gameId,
+    title,
+    title_i18n: { [locale]: title },
+    description: description || null,
+    description_i18n: description ? { [locale]: description } : {},
+    tier,
+    order_index: count ?? 0,
+  });
+
+  if (error) return { error: error.message };
+
+  revalidatePath("/games/[slug]/edit", "page");
+  revalidatePath("/games/[slug]", "page");
+  return { error: null };
+}
+
 export async function addItemAction(
   categoryId: string,
   _prevState: EditFormState,

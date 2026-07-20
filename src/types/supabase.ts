@@ -19,6 +19,10 @@ export interface Database {
           cover_url: string | null
           created_by: string | null
           created_at: string
+          hltb_id: string | null
+          hltb_main_hours: number | null
+          hltb_main_extra_hours: number | null
+          hltb_completionist_hours: number | null
         }
         Insert: {
           id?: string
@@ -29,6 +33,10 @@ export interface Database {
           cover_url?: string | null
           created_by?: string | null
           created_at?: string
+          hltb_id?: string | null
+          hltb_main_hours?: number | null
+          hltb_main_extra_hours?: number | null
+          hltb_completionist_hours?: number | null
         }
         Update: {
           id?: string
@@ -39,6 +47,10 @@ export interface Database {
           cover_url?: string | null
           created_by?: string | null
           created_at?: string
+          hltb_id?: string | null
+          hltb_main_hours?: number | null
+          hltb_main_extra_hours?: number | null
+          hltb_completionist_hours?: number | null
         }
         Relationships: []
       }
@@ -204,6 +216,83 @@ export interface Database {
             foreignKeyName: "user_item_progress_item_id_fkey"
             columns: ["item_id"]
             referencedRelation: "checklist_items"
+            referencedColumns: ["id"]
+          }
+        ]
+      }
+      trophies: {
+        Row: {
+          id: string
+          game_id: string
+          key: string | null
+          title: string
+          title_i18n: Json
+          description: string | null
+          description_i18n: Json
+          tier: string
+          order_index: number
+          created_at: string
+        }
+        Insert: {
+          id?: string
+          game_id: string
+          key?: string | null
+          title: string
+          title_i18n?: Json
+          description?: string | null
+          description_i18n?: Json
+          tier?: string
+          order_index?: number
+          created_at?: string
+        }
+        Update: {
+          id?: string
+          game_id?: string
+          key?: string | null
+          title?: string
+          title_i18n?: Json
+          description?: string | null
+          description_i18n?: Json
+          tier?: string
+          order_index?: number
+          created_at?: string
+        }
+        Relationships: [
+          {
+            foreignKeyName: "trophies_game_id_fkey"
+            columns: ["game_id"]
+            referencedRelation: "games"
+            referencedColumns: ["id"]
+          }
+        ]
+      }
+      user_trophy_progress: {
+        Row: {
+          id: string
+          user_id: string
+          trophy_id: string
+          completed: boolean
+          completed_at: string | null
+        }
+        Insert: {
+          id?: string
+          user_id: string
+          trophy_id: string
+          completed?: boolean
+          completed_at?: string | null
+        }
+        Update: {
+          id?: string
+          user_id?: string
+          trophy_id?: string
+          completed?: boolean
+          completed_at?: string | null
+        }
+        Relationships: [
+          {
+            foreignKeyName: "user_trophy_progress_trophy_id_fkey"
+            columns: ["trophy_id"]
+            referencedRelation: "trophies"
             referencedColumns: ["id"]
           }
         ]

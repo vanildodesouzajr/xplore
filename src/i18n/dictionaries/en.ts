@@ -71,6 +71,7 @@ export const en = {
     inLibrary: "In your library",
     addToLibrary: "Add to library",
     complete: "Complete",
+    completionistHours: "{hours}h to 100%",
   },
   gameDetail: {
     editChecklist: "Edit checklist",
@@ -81,6 +82,12 @@ export const en = {
     addCategoriesItems: "Add categories and items",
     toGetStarted: "to get started.",
     noChecklistOther: "The creator hasn't added one yet.",
+    hltb: {
+      title: "Estimated time (HowLongToBeat)",
+      mainStory: "Main Story",
+      mainExtra: "Main + Extra",
+      completionist: "Completionist",
+    },
   },
   newGame: {
     backToCatalog: "Back to catalog",
@@ -131,6 +138,28 @@ export const en = {
     deleteAccount: "Delete my account",
     deleting: "Deleting…",
     deleteConfirm: "Delete your account permanently? This can't be undone.",
+  },
+  trophies: {
+    tabLabel: "Trophies",
+    detonadoTabLabel: "Walkthrough",
+    progress: "Trophy progress",
+    empty: "No trophies yet.",
+    addTrophies: "Add trophies",
+    tiers: {
+      bronze: "Bronze",
+      silver: "Silver",
+      gold: "Gold",
+      platinum: "Platinum",
+    },
+    edit: {
+      sectionTitle: "Trophies",
+      add: "Add trophy",
+      adding: "Adding…",
+      titlePlaceholder: "e.g. Shadow Moses Survivor",
+      descPlaceholder: "Description (optional)",
+      tierLabel: "Tier",
+      titleRequired: "Trophy title is required.",
+    },
   },
 };
 

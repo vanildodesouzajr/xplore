@@ -1442,5 +1442,67 @@
         }
       ]
     }
+  ],
+  "hltb_id": "5908",
+  "hltb_main_hours": 11,
+  "hltb_main_extra_hours": 13,
+  "hltb_completionist_hours": 18,
+  "trophies": [
+    {
+      "key": "shadow-moses-survivor",
+      "title": "Shadow Moses Survivor",
+      "title_i18n": {
+        "en": "Shadow Moses Survivor",
+        "pt": "Sobrevivente de Shadow Moses"
+      },
+      "description": "Complete the game on any difficulty.",
+      "description_i18n": {
+        "en": "Complete the game on any difficulty.",
+        "pt": "Termine o jogo em qualquer dificuldade."
+      },
+      "tier": "bronze"
+    },
+    {
+      "key": "perfect-stealth",
+      "title": "Perfect Stealth",
+      "title_i18n": {
+        "en": "Perfect Stealth",
+        "pt": "Furtividade Perfeita"
+      },
+      "description": "Clear an entire area without triggering a single alert.",
+      "description_i18n": {
+        "en": "Clear an entire area without triggering a single alert.",
+        "pt": "Atravesse uma área inteira sem disparar nenhum alerta."
+      },
+      "tier": "silver"
+    },
+    {
+      "key": "boss-slayer",
+      "title": "Boss Slayer",
+      "title_i18n": {
+        "en": "Boss Slayer",
+        "pt": "Caçador de Chefes"
+      },
+      "description": "Defeat every boss in the game.",
+      "description_i18n": {
+        "en": "Defeat every boss in the game.",
+        "pt": "Derrote todos os chefes do jogo."
+      },
+      "tier": "gold"
+    },
+    {
+      "key": "metal-gear-down",
+      "title": "Metal Gear Down",
+      "title_i18n": {
+        "en": "Metal Gear Down",
+        "pt": "Metal Gear Abatido"
+      },
+      "description": "Destroy REX and complete the game with the platinum-tier ending.",
+      "description_i18n": {
+        "en": "Destroy REX and complete the game with the platinum-tier ending.",
+        "pt": "Destrua o REX e complete o jogo com o final de nível platina."
+      },
+      "tier": "platinum"
+    }
   ]
 }

@@ -43,7 +43,9 @@ export default async function DashboardPage() {
 
   const { data: games } = await supabase
     .from("games")
-    .select("id, slug, title, title_i18n, platform, cover_url")
+    .select(
+      "id, slug, title, title_i18n, platform, cover_url, hltb_completionist_hours"
+    )
     .in("id", gameIds);
 
   const { data: categories } = await supabase
@@ -129,6 +131,13 @@ export default async function DashboardPage() {
               percent={computeCompletionPercent(total, completed)}
               completeLabel={dict.games.complete}
               coverUrl={game.cover_url}
+              completionistBadge={
+                game.hltb_completionist_hours != null
+                  ? t(dict.games.completionistHours, {
+                      hours: game.hltb_completionist_hours,
+                    })
+                  : null
+              }
             />
           );
         })}

@@ -75,6 +75,7 @@ export const pt: Dictionary = {
     inLibrary: "Na sua biblioteca",
     addToLibrary: "Adicionar à biblioteca",
     complete: "Concluído",
+    completionistHours: "{hours}h para 100%",
   },
   gameDetail: {
     editChecklist: "Editar checklist",
@@ -85,6 +86,12 @@ export const pt: Dictionary = {
     addCategoriesItems: "Adicione categorias e itens",
     toGetStarted: "para começar.",
     noChecklistOther: "O criador ainda não adicionou um.",
+    hltb: {
+      title: "Tempo estimado (HowLongToBeat)",
+      mainStory: "História principal",
+      mainExtra: "História + extras",
+      completionist: "100%",
+    },
   },
   newGame: {
     backToCatalog: "Voltar ao catálogo",
@@ -136,5 +143,27 @@ export const pt: Dictionary = {
     deleting: "Excluindo…",
     deleteConfirm:
       "Excluir sua conta permanentemente? Isso não pode ser desfeito.",
+  },
+  trophies: {
+    tabLabel: "Troféus",
+    detonadoTabLabel: "Detonado",
+    progress: "Progresso de troféus",
+    empty: "Nenhum troféu ainda.",
+    addTrophies: "Adicione troféus",
+    tiers: {
+      bronze: "Bronze",
+      silver: "Prata",
+      gold: "Ouro",
+      platinum: "Platina",
+    },
+    edit: {
+      sectionTitle: "Troféus",
+      add: "Adicionar troféu",
+      adding: "Adicionando…",
+      titlePlaceholder: "ex.: Sobrevivente de Shadow Moses",
+      descPlaceholder: "Descrição (opcional)",
+      tierLabel: "Categoria",
+      titleRequired: "O título do troféu é obrigatório.",
+    },
   },
 };

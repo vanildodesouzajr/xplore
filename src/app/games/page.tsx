@@ -5,7 +5,7 @@ import { GameCard } from "@/components/game-card";
 import { Button } from "@/components/ui/button";
 import { PageContainer } from "@/components/page-container";
 import { getLocale } from "@/i18n/get-locale";
-import { getDictionary } from "@/i18n/get-dictionary";
+import { getDictionary, t } from "@/i18n/get-dictionary";
 import { pick } from "@/i18n/pick";
 import { addGameToLibraryAction } from "./actions";
 
@@ -20,7 +20,9 @@ export default async function GamesPage() {
   const [{ data: games }, { data: tracked }] = await Promise.all([
     supabase
       .from("games")
-      .select("id, slug, title, title_i18n, platform, cover_url")
+      .select(
+        "id, slug, title, title_i18n, platform, cover_url, hltb_completionist_hours"
+      )
       .order("title"),
     supabase
       .from("user_game_progress")
@@ -71,6 +73,13 @@ export default async function GamesPage() {
                 href={`/games/${game.slug}`}
                 coverUrl={game.cover_url}
                 completeLabel={d.complete}
+                completionistBadge={
+                  game.hltb_completionist_hours != null
+                    ? t(d.completionistHours, {
+                        hours: game.hltb_completionist_hours,
+                      })
+                    : null
+                }
                 footer={
                   isTracked ? (
                     <span className="inline-flex items-center gap-1.5 text-sm font-medium text-success">

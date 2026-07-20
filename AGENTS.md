@@ -30,6 +30,21 @@ Xplore is a bilingual game‑completion checklist tracker (Next.js 16 + Supabase
   `user_*_progress`) survive re‑imports. `key` is **frozen** once assigned: edit titles
   freely, never edit keys. Always `games:import -- <slug> --dry-run` first; `--prune` deletes
   DB rows absent from the file (destructive — removes their user progress).
+- **HowLongToBeat completion times**: `games.hltb_id` / `hltb_main_hours` /
+  `hltb_main_extra_hours` / `hltb_completionist_hours` are looked up once by the importer
+  (`scripts/games/hltb.mjs`, via the unofficial `hltb-client` package) and cached back into
+  the content file — the app never calls HLTB at request time. A game already carrying
+  `hltb_id` is skipped on future imports; pass `--refresh-hltb` to re-fetch, or `--skip-hltb`
+  to disable lookups entirely (e.g. offline/CI).
+- **Trophies** (`trophies` / `user_trophy_progress` tables) are a second, **unintegrated**
+  system alongside the detonado checklist — own tables, own RLS, own progress bar and UI tab
+  ("Troféus"/"Trophies" next to "Detonado"/"Walkthrough" on the game page). A curated game's
+  optional top-level `trophies: [{ key, title, title_i18n, description, description_i18n,
+  tier }]` array in `content/games/<slug>.json` is a **sibling** of `categories`, not nested
+  inside it, and follows the same frozen-`key` upsert contract via `games:import`. Unlike
+  HLTB, trophy tiers are always curator-entered by hand — platform trophy APIs (PSN/Xbox/
+  Steam) require a per-user authenticated session, so there's no "look up by title" endpoint
+  to automate against. `tier` is one of `bronze`/`silver`/`gold`/`platinum`.
 - **Editing curated content in place** (don't re‑create a seeded game) preserves users'
   progress — re‑creating changes the row ids and wipes existing `user_*_progress`.
 - **Per‑step images**: `checklist_items.image_url` (nullable) holds an optional image for a

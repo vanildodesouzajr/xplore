@@ -108,10 +108,21 @@ The `*_i18n` columns are JSONB locale maps like `{ "en": "…", "pt": "…" }`. 
 
 ## Adding official game content
 
-Curated games (e.g. Metal Gear Solid) are inserted by a one‑off service‑role script that
-sets `title_i18n`/`description_i18n` for both locales and assigns `created_by` to the team
-account. Covers go in `public/covers/<slug>.png` and are referenced via `cover_url`.
-(These seed scripts are run locally and not committed.)
+Curated games (e.g. Metal Gear Solid) live as `content/games/<slug>.json` — full bilingual
+`title_i18n`/`description_i18n` for the game, its categories, and its items, each carrying a
+stable, frozen `key`. Covers go in `public/covers/<slug>.png`, referenced via `cover_url`.
+
+Sync a file to the database with `scripts/games/sync.mjs` (service role, bypasses RLS):
+
+```
+npm run games:import -- <slug> --dry-run   # preview
+npm run games:import -- <slug>             # apply
+```
+
+The importer upserts by `(parent, key)`, so ids — and therefore everyone's saved progress —
+survive re-imports; it also looks up HowLongToBeat completion times once per game and caches
+them into the same file. `npm run games:export -- <slug>` bootstraps a new file from an
+existing DB row. See `AGENTS.md` for the full contract (flags, orphan handling, HLTB caching).
 
 ## Deployment
 

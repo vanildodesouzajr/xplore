@@ -3,14 +3,17 @@ import Link from "next/link";
 import { notFound } from "next/navigation";
 import { createClient } from "@/lib/supabase/server";
 import { ChecklistNavigator } from "@/components/checklist-navigator";
+import { HltbStats } from "@/components/hltb-stats";
 import { ProgressBar } from "@/components/progress-bar";
+import { TrophyList } from "@/components/trophy-list";
 import { Button } from "@/components/ui/button";
 import { PageContainer } from "@/components/page-container";
+import { Tabs, TabsList, TabsTrigger, TabsContent } from "@/components/ui/tabs";
 import { computeCompletionPercent } from "@/lib/progress";
 import { getLocale } from "@/i18n/get-locale";
 import { getDictionary, t } from "@/i18n/get-dictionary";
 import { pick } from "@/i18n/pick";
-import { toggleItemCompletionAction } from "./actions";
+import { toggleItemCompletionAction, toggleTrophyCompletionAction } from "./actions";
 
 export default async function GameDetailPage({
   params,
@@ -25,10 +28,13 @@ export default async function GameDetailPage({
   const locale = await getLocale();
   const dict = getDictionary(locale);
   const d = dict.gameDetail;
+  const td = dict.trophies;
 
   const { data: game } = await supabase
     .from("games")
-    .select("id, slug, title, title_i18n, platform, cover_url, created_by")
+    .select(
+      "id, slug, title, title_i18n, platform, cover_url, created_by, hltb_main_hours, hltb_main_extra_hours, hltb_completionist_hours"
+    )
     .eq("slug", slug)
     .maybeSingle();
 
@@ -97,6 +103,42 @@ export default async function GameDetailPage({
     categoriesWithItems[0]?.id ??
     "";
 
+  // Trophies are a separate system from the checklist above — their own
+  // table and their own progress, fetched independently and never mixed in.
+  const { data: trophies } = await supabase
+    .from("trophies")
+    .select("id, title, title_i18n, description, description_i18n, tier, order_index")
+    .eq("game_id", game.id)
+    .order("order_index");
+
+  const trophyIds = (trophies ?? []).map((trophy) => trophy.id);
+
+  const { data: trophyProgressRows } = trophyIds.length
+    ? await supabase
+        .from("user_trophy_progress")
+        .select("trophy_id, completed")
+        .eq("user_id", userId ?? "")
+        .in("trophy_id", trophyIds)
+    : { data: [] };
+
+  const completedTrophyIds = new Set(
+    (trophyProgressRows ?? [])
+      .filter((row) => row.completed)
+      .map((row) => row.trophy_id)
+  );
+
+  const trophiesWithProgress = (trophies ?? []).map((trophy) => ({
+    id: trophy.id,
+    title: pick(trophy.title_i18n, locale, trophy.title),
+    description: trophy.description
+      ? pick(trophy.description_i18n, locale, trophy.description)
+      : null,
+    tier: trophy.tier,
+    completed: completedTrophyIds.has(trophy.id),
+  }));
+
+  const showTrophiesTab = trophiesWithProgress.length > 0 || isOwner;
+
   return (
     <PageContainer>
       <div className="flex items-start justify-between gap-4">
@@ -131,52 +173,96 @@ export default async function GameDetailPage({
         )}
       </div>
 
-      <div className="rounded-xl border bg-card p-4">
-        <div className="mb-2 flex items-baseline justify-between">
-          <span className="text-sm font-medium text-muted-foreground">
-            {d.overallProgress}
-          </span>
-          <span className="font-heading text-2xl font-semibold tabular-nums">
-            {overallPercent}
-            <span className="text-base text-muted-foreground">%</span>
-          </span>
-        </div>
-        <ProgressBar percent={overallPercent} />
-        {itemIds.length > 0 && (
-          <p className="mt-2 text-xs text-muted-foreground">
-            {t(d.itemsComplete, {
-              done: completedIds.size,
-              total: itemIds.length,
-            })}
-          </p>
-        )}
-      </div>
+      <HltbStats
+        title={d.hltb.title}
+        mainStoryLabel={d.hltb.mainStory}
+        mainExtraLabel={d.hltb.mainExtra}
+        completionistLabel={d.hltb.completionist}
+        mainHours={game.hltb_main_hours}
+        mainExtraHours={game.hltb_main_extra_hours}
+        completionistHours={game.hltb_completionist_hours}
+      />
 
-      {categoriesWithItems.length === 0 ? (
-        <p className="text-sm text-muted-foreground">
-          {d.noChecklistOwner}{" "}
-          {isOwner ? (
-            <>
-              <Link
-                href={`/games/${slug}/edit`}
-                className="underline underline-offset-4"
-              >
-                {d.addCategoriesItems}
-              </Link>{" "}
-              {d.toGetStarted}
-            </>
-          ) : (
-            d.noChecklistOther
+      <Tabs defaultValue="detonado">
+        <TabsList>
+          <TabsTrigger value="detonado">{td.detonadoTabLabel}</TabsTrigger>
+          {showTrophiesTab && (
+            <TabsTrigger value="trophies">{td.tabLabel}</TabsTrigger>
           )}
-        </p>
-      ) : (
-        <ChecklistNavigator
-          sections={categoriesWithItems}
-          initialSectionId={initialSectionId}
-          chaptersLabel={d.chapters}
-          toggleAction={toggleItemCompletionAction}
-        />
-      )}
+        </TabsList>
+
+        <TabsContent value="detonado" className="flex flex-col gap-4">
+          <div className="rounded-xl border bg-card p-4">
+            <div className="mb-2 flex items-baseline justify-between">
+              <span className="text-sm font-medium text-muted-foreground">
+                {d.overallProgress}
+              </span>
+              <span className="font-heading text-2xl font-semibold tabular-nums">
+                {overallPercent}
+                <span className="text-base text-muted-foreground">%</span>
+              </span>
+            </div>
+            <ProgressBar percent={overallPercent} />
+            {itemIds.length > 0 && (
+              <p className="mt-2 text-xs text-muted-foreground">
+                {t(d.itemsComplete, {
+                  done: completedIds.size,
+                  total: itemIds.length,
+                })}
+              </p>
+            )}
+          </div>
+
+          {categoriesWithItems.length === 0 ? (
+            <p className="text-sm text-muted-foreground">
+              {d.noChecklistOwner}{" "}
+              {isOwner ? (
+                <>
+                  <Link
+                    href={`/games/${slug}/edit`}
+                    className="underline underline-offset-4"
+                  >
+                    {d.addCategoriesItems}
+                  </Link>{" "}
+                  {d.toGetStarted}
+                </>
+              ) : (
+                d.noChecklistOther
+              )}
+            </p>
+          ) : (
+            <ChecklistNavigator
+              sections={categoriesWithItems}
+              initialSectionId={initialSectionId}
+              chaptersLabel={d.chapters}
+              toggleAction={toggleItemCompletionAction}
+            />
+          )}
+        </TabsContent>
+
+        {showTrophiesTab && (
+          <TabsContent value="trophies">
+            {trophiesWithProgress.length === 0 ? (
+              <p className="text-sm text-muted-foreground">
+                {td.empty}{" "}
+                <Link
+                  href={`/games/${slug}/edit`}
+                  className="underline underline-offset-4"
+                >
+                  {td.addTrophies}
+                </Link>{" "}
+                {d.toGetStarted}
+              </p>
+            ) : (
+              <TrophyList
+                trophies={trophiesWithProgress}
+                toggleAction={toggleTrophyCompletionAction}
+                progressLabel={td.progress}
+              />
+            )}
+          </TabsContent>
+        )}
+      </Tabs>
     </PageContainer>
   );
 }

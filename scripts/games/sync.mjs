@@ -1,12 +1,12 @@
 // Games content sync — the official pipeline for curated checklists.
 //
 //   node --env-file=.env.local scripts/games/sync.mjs export <slug>
-//   node --env-file=.env.local scripts/games/sync.mjs import [<slug>] [--dry-run] [--prune]
+//   node --env-file=.env.local scripts/games/sync.mjs import [<slug>] [--dry-run] [--prune] [--skip-hltb] [--refresh-hltb]
 //
 // or via package.json:
 //
 //   npm run games:export -- <slug>
-//   npm run games:import -- [<slug>] [--dry-run] [--prune]
+//   npm run games:import -- [<slug>] [--dry-run] [--prune] [--skip-hltb] [--refresh-hltb]
 //
 // A game lives in content/games/<slug>.json as { slug, title, title_i18n,
 // platform, cover_url, categories: [{ key, title, title_i18n, items: [...] }] }.
@@ -15,6 +15,24 @@
 // rows in place — ids stay put and user_*_progress is preserved. `key` is
 // FROZEN once assigned; edit titles freely, never edit keys.
 //
+// Trophies (optional top-level `trophies: [{ key, title, title_i18n,
+// description, description_i18n, tier }]`, tier one of bronze/silver/gold/
+// platinum) are a SIBLING of `categories`, not nested inside it — a separate,
+// unintegrated system with its own progress. Same key-based upsert contract.
+// There's no public "look up trophies by title" API (platform trophy lists
+// require a per-user authenticated session), so unlike HLTB these are always
+// curator-entered by hand, never auto-fetched.
+//
+// HowLongToBeat completion times (optional `hltb_id`, `hltb_main_hours`,
+// `hltb_main_extra_hours`, `hltb_completionist_hours`) are looked up once per
+// game — the (unofficial) HLTB API is never called at page-request time. On
+// import, if a game has no cached `hltb_id` yet, the importer looks it up and
+// writes the result back into the content file, so it becomes the cached,
+// hand-editable source of truth. `--skip-hltb` disables lookups entirely
+// (offline/CI); `--refresh-hltb` forces a re-fetch even when already cached.
+// A lookup miss or API failure is non-fatal and never blocks the checklist
+// import itself.
+//
 // Uses SUPABASE_SECRET_KEY (service role, bypasses RLS) — server-side only.
 
 import { createClient } from "@supabase/supabase-js";
@@ -22,6 +40,7 @@ import { mkdir, readFile, readdir, writeFile } from "node:fs/promises";
 import { existsSync } from "node:fs";
 import path from "node:path";
 import { fileURLToPath } from "node:url";
+import { hltbClient, lookupHltb } from "./hltb.mjs";
 
 const __dirname = path.dirname(fileURLToPath(import.meta.url));
 const CONTENT_DIR = path.resolve(__dirname, "../../content/games");
@@ -80,7 +99,9 @@ async function exportGame(slug) {
 
   const { data: game, error: gErr } = await db
     .from("games")
-    .select("id, slug, title, title_i18n, platform, cover_url, created_by")
+    .select(
+      "id, slug, title, title_i18n, platform, cover_url, created_by, hltb_id, hltb_main_hours, hltb_main_extra_hours, hltb_completionist_hours"
+    )
     .eq("slug", slug)
     .maybeSingle();
   if (gErr) fail(gErr.message);
@@ -108,6 +129,23 @@ async function exportGame(slug) {
         .order("order_index")
     : { data: [], error: null };
   if (iErr) fail(iErr.message);
+
+  const { data: trophyRows, error: tErr } = await db
+    .from("trophies")
+    .select("id, title, title_i18n, description, description_i18n, tier, order_index")
+    .eq("game_id", game.id)
+    .order("order_index");
+  if (tErr) fail(tErr.message);
+
+  const trophyKeys = new Set();
+  const trophies = trophyRows.map((tr) => ({
+    key: uniqueKey(toKey(eng(tr.title_i18n, tr.title)), trophyKeys),
+    title: tr.title,
+    title_i18n: tr.title_i18n ?? {},
+    description: tr.description ?? null,
+    description_i18n: tr.description_i18n ?? {},
+    tier: tr.tier,
+  }));
 
   const catKeys = new Set();
   const categories = cats.map((c) => {
@@ -138,7 +176,17 @@ async function exportGame(slug) {
     platform: game.platform,
     cover_url: game.cover_url ?? null,
     created_by: game.created_by ?? null,
+    // Only emit when a lookup has run, so games not yet enriched stay clean.
+    ...(game.hltb_id
+      ? {
+          hltb_id: game.hltb_id,
+          hltb_main_hours: game.hltb_main_hours,
+          hltb_main_extra_hours: game.hltb_main_extra_hours,
+          hltb_completionist_hours: game.hltb_completionist_hours,
+        }
+      : {}),
     categories,
+    trophies,
   };
 
   await mkdir(CONTENT_DIR, { recursive: true });
@@ -147,7 +195,7 @@ async function exportGame(slug) {
 
   const itemCount = categories.reduce((n, c) => n + c.items.length, 0);
   console.log(
-    `✓ Exported "${game.slug}" — ${categories.length} categories, ${itemCount} items`
+    `✓ Exported "${game.slug}" — ${categories.length} categories, ${itemCount} items, ${trophies.length} trophies`
   );
   console.log(`  → ${path.relative(process.cwd(), out)}`);
 }
@@ -155,8 +203,11 @@ async function exportGame(slug) {
 // ---------------------------------------------------------------------------
 // import: content/games/*.json -> DB (idempotent upsert by key)
 // ---------------------------------------------------------------------------
-async function importGames(slug, { dryRun, prune }) {
+async function importGames(slug, { dryRun, prune, skipHltb, refreshHltb }) {
   const db = client();
+  // One client per run so its auth-token cache is shared across every game
+  // in a bulk `games:import` instead of re-authenticating each time.
+  const hltb = skipHltb ? null : hltbClient();
   const files = slug
     ? [path.join(CONTENT_DIR, `${slug}.json`)]
     : (await readdir(CONTENT_DIR).catch(() => []))
@@ -165,13 +216,51 @@ async function importGames(slug, { dryRun, prune }) {
 
   if (!files.length) fail(`No content files found in ${CONTENT_DIR}.`);
 
-  const tally = { games: 0, catIns: 0, catUpd: 0, itemIns: 0, itemUpd: 0, orphans: 0 };
+  const tally = {
+    games: 0,
+    catIns: 0,
+    catUpd: 0,
+    itemIns: 0,
+    itemUpd: 0,
+    trophyIns: 0,
+    trophyUpd: 0,
+    orphans: 0,
+  };
   const mark = dryRun ? "(dry-run) would" : "";
 
   for (const file of files) {
     if (!existsSync(file)) fail(`Content file not found: ${file}`);
     const doc = JSON.parse(await readFile(file, "utf8"));
     console.log(`\n▸ ${doc.slug}`);
+
+    // --- HLTB enrichment (cached in the content file, fetched once) ---
+    if (hltb) {
+      const alreadyCached = Object.prototype.hasOwnProperty.call(doc, "hltb_id");
+      if (!alreadyCached || refreshHltb) {
+        const title = eng(doc.title_i18n, doc.title);
+        const result = await lookupHltb(hltb, title);
+        if (result) {
+          console.log(
+            `  HLTB: matched "${result.matchedName}" (#${result.hltb_id}) — ` +
+              `main ${result.hltb_main_hours ?? "?"}h / +extra ${result.hltb_main_extra_hours ?? "?"}h / ` +
+              `completionist ${result.hltb_completionist_hours ?? "?"}h`
+          );
+          doc.hltb_id = result.hltb_id;
+          doc.hltb_main_hours = result.hltb_main_hours;
+          doc.hltb_main_extra_hours = result.hltb_main_extra_hours;
+          doc.hltb_completionist_hours = result.hltb_completionist_hours;
+        } else {
+          console.log(`  HLTB: no match for "${title}"`);
+          doc.hltb_id = null;
+          doc.hltb_main_hours = null;
+          doc.hltb_main_extra_hours = null;
+          doc.hltb_completionist_hours = null;
+        }
+        if (!dryRun) {
+          await writeFile(file, JSON.stringify(doc, null, 2) + "\n", "utf8");
+        }
+      }
+    }
 
     // --- game ---
     const { data: existingGame, error: gSelErr } = await db
@@ -186,6 +275,10 @@ async function importGames(slug, { dryRun, prune }) {
       title_i18n: doc.title_i18n ?? {},
       platform: doc.platform,
       cover_url: doc.cover_url ?? null,
+      hltb_id: doc.hltb_id ?? null,
+      hltb_main_hours: doc.hltb_main_hours ?? null,
+      hltb_main_extra_hours: doc.hltb_main_extra_hours ?? null,
+      hltb_completionist_hours: doc.hltb_completionist_hours ?? null,
     };
 
     let gameId;
@@ -320,12 +413,57 @@ async function importGames(slug, { dryRun, prune }) {
 
     const orphanCats = dbCats.filter((r) => !usedCat.has(r.id));
     await handleOrphans("category", orphanCats, "checklist_categories", db, { dryRun, prune, tally });
+
+    // --- trophies (sibling of categories, not integrated with the checklist) ---
+    const { data: dbTrophies, error: trErr } = await db
+      .from("trophies")
+      .select("id, key, title")
+      .eq("game_id", gameId)
+      .order("order_index");
+    if (trErr) fail(trErr.message);
+    const usedTrophy = new Set();
+
+    for (let ti = 0; ti < (doc.trophies ?? []).length; ti++) {
+      const trophy = doc.trophies[ti];
+      if (!trophy.key) fail(`Trophy #${ti} in ${doc.slug} is missing "key".`);
+      const match = matchRow(dbTrophies, trophy, usedTrophy);
+      const fields = {
+        key: trophy.key,
+        title: trophy.title,
+        title_i18n: trophy.title_i18n ?? {},
+        description: trophy.description ?? null,
+        description_i18n: trophy.description_i18n ?? {},
+        tier: trophy.tier ?? "bronze",
+        order_index: ti,
+      };
+
+      if (match) {
+        usedTrophy.add(match.id);
+        if (!dryRun) {
+          const { error } = await db.from("trophies").update(fields).eq("id", match.id);
+          if (error) fail(error.message);
+        }
+        tally.trophyUpd++;
+        const adopted = !match.key ? " [adopt]" : "";
+        console.log(`    ${mark} update trophy "${trophy.key}"${adopted}`);
+      } else {
+        tally.trophyIns++;
+        console.log(`    ${mark} insert trophy "${trophy.key}"`);
+        if (!dryRun) {
+          const { error } = await db.from("trophies").insert({ game_id: gameId, ...fields });
+          if (error) fail(error.message);
+        }
+      }
+    }
+
+    const orphanTrophies = dbTrophies.filter((r) => !usedTrophy.has(r.id));
+    await handleOrphans("trophy", orphanTrophies, "trophies", db, { dryRun, prune, tally });
   }
 
   console.log(
     `\n${dryRun ? "(dry-run) " : ""}Done — games:${tally.games} ` +
       `categories:+${tally.catIns}/~${tally.catUpd} items:+${tally.itemIns}/~${tally.itemUpd} ` +
-      `orphans:${tally.orphans}`
+      `trophies:+${tally.trophyIns}/~${tally.trophyUpd} orphans:${tally.orphans}`
   );
   if (tally.orphans && !prune) {
     console.log(
@@ -363,7 +501,12 @@ async function handleOrphans(label, orphans, table, db, { dryRun, prune, tally }
 const [, , mode, ...rest] = process.argv;
 const flags = new Set(rest.filter((a) => a.startsWith("--")));
 const positional = rest.filter((a) => !a.startsWith("--"));
-const opts = { dryRun: flags.has("--dry-run"), prune: flags.has("--prune") };
+const opts = {
+  dryRun: flags.has("--dry-run"),
+  prune: flags.has("--prune"),
+  skipHltb: flags.has("--skip-hltb"),
+  refreshHltb: flags.has("--refresh-hltb"),
+};
 
 if (mode === "export") {
   await exportGame(positional[0]);
@@ -373,6 +516,6 @@ if (mode === "export") {
   fail(
     "Usage:\n" +
       "  games:export -- <slug>\n" +
-      "  games:import -- [<slug>] [--dry-run] [--prune]"
+      "  games:import -- [<slug>] [--dry-run] [--prune] [--skip-hltb] [--refresh-hltb]"
   );
 }
