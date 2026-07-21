@@ -52,7 +52,7 @@ export function TrophyRow({
         className="mt-0.5"
       />
       <Trophy
-        className={cn("mt-0.5 size-4 shrink-0", TIER_COLOR[tier] ?? TIER_COLOR.bronze)}
+        className={cn("mt-0.5 size-5 sm:size-4 shrink-0", TIER_COLOR[tier] ?? TIER_COLOR.bronze)}
       />
       <Label
         htmlFor={`trophy-${trophyId}`}
